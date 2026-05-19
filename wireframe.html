@@ -1,0 +1,597 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>David Temple</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:    #1a1a1a;
+    --ink-2:  #4a4a4a;
+    --ink-3:  #8a8a8a;
+    --ink-4:  #c8c5bd;
+    --paper:  #fdfcf9;
+    --rule:   #e5e2d8;
+    --hi:     #1a1a1a;
+    --serif:  'Newsreader', Georgia, 'Times New Roman', serif;
+    --mono:   'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--paper);color:var(--ink);
+    font-family:var(--serif);font-weight:300;
+    font-size:17px;line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+  }
+  a{color:inherit}
+  a.link{
+    text-decoration:underline;text-decoration-color:var(--ink-4);
+    text-decoration-thickness:1px;text-underline-offset:3px;
+  }
+  a.link:hover{text-decoration-color:var(--ink)}
+  hr{border:0;border-top:1px solid var(--rule);margin:28px 0}
+
+  .layout{
+    max-width:980px;margin:0 auto;padding:72px 36px 120px;
+    display:grid;grid-template-columns:180px 1fr;gap:72px;
+  }
+
+  /* ---------- sidebar ---------- */
+  .side{position:sticky;top:72px;align-self:start}
+  .brand{
+    font-family:var(--serif);font-weight:500;font-size:22px;line-height:1.05;
+    letter-spacing:0.5px;margin:0 0 4px;
+  }
+  .brand small{display:block;font-weight:300;font-size:13px;color:var(--ink-3);font-family:var(--mono);letter-spacing:0;text-transform:uppercase;margin-top:6px}
+  .tagline{font-size:14px;color:var(--ink-2);margin:14px 0 22px;font-style:italic}
+  .nav{display:flex;flex-direction:column;gap:5px;margin-bottom:24px}
+  .nav a{
+    display:block;font-size:15px;color:var(--ink-2);text-decoration:none;
+    padding:2px 0;border-left:2px solid transparent;padding-left:10px;margin-left:-12px;
+    transition:color .12s, border-color .12s;
+  }
+  .nav a:hover{color:var(--ink)}
+  .nav a.cur{color:var(--ink);border-left-color:var(--ink);font-weight:500}
+  .side .group-label{
+    font-family:var(--mono);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;
+    color:var(--ink-3);margin:18px 0 8px;
+  }
+  .side .contact{display:flex;flex-direction:column;gap:4px;font-size:14px;color:var(--ink-2)}
+  .side .contact a{text-decoration:none;color:var(--ink-2)}
+  .side .contact a:hover{color:var(--ink);text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px}
+
+  /* ---------- content ---------- */
+  .content{min-width:0}
+  .page{display:none}
+  .page.active{display:block}
+
+  /* about page */
+  .intro{
+    display:grid;grid-template-columns:96px 1fr;gap:22px;align-items:center;
+    margin-bottom:8px;
+  }
+  .avatar{
+    width:96px;height:96px;border-radius:50%;
+    background:
+      radial-gradient(circle at 50% 35%, #d8d4c8 0 22%, transparent 23%),
+      radial-gradient(circle at 50% 95%, #d8d4c8 0 38%, transparent 39%),
+      linear-gradient(135deg,#f0ece0 0%,#e3dfd1 100%);
+    border:1px solid var(--rule);
+    position:relative;overflow:hidden;
+  }
+  .avatar::after{
+    content:"family photo";
+    position:absolute;inset:auto 0 6px;text-align:center;
+    font-family:var(--mono);font-size:8px;color:var(--ink-3);letter-spacing:.5px;
+    text-transform:uppercase;
+  }
+  .greeting{
+    font-family:var(--serif);font-weight:400;font-size:32px;line-height:1.1;
+    margin:0;letter-spacing:-0.3px;
+  }
+  .greeting em{font-style:italic;font-weight:400}
+  .sub-greeting{font-size:14px;color:var(--ink-3);margin-top:4px;font-family:var(--mono)}
+
+  .current{
+    margin:32px 0 8px;padding:18px 22px;
+    border:1px solid var(--rule);border-radius:3px;
+    background:#fbf9f3;
+    display:flex;align-items:flex-start;gap:14px;
+  }
+  .current .marker{
+    flex-shrink:0;width:8px;height:8px;border-radius:50%;background:var(--ink);
+    margin-top:9px;position:relative;
+  }
+  .current .marker::after{
+    content:"";position:absolute;inset:-4px;border-radius:50%;
+    border:1px solid var(--ink);opacity:.35;animation:pulse 2.4s ease-in-out infinite;
+  }
+  @keyframes pulse{0%,100%{transform:scale(1);opacity:.35}50%{transform:scale(1.6);opacity:0}}
+  .current .text{font-size:15px;line-height:1.55;color:var(--ink-2)}
+  .current .text strong{color:var(--ink);font-weight:500}
+
+  .section-label{
+    font-family:var(--mono);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;
+    color:var(--ink-3);margin:32px 0 14px;
+  }
+
+  .roles{display:flex;flex-direction:column}
+  .role-row{
+    display:grid;grid-template-columns:40px 1fr;gap:18px;align-items:flex-start;
+    padding:16px 0;border-top:1px solid var(--rule);
+  }
+  .role-row:first-child{border-top:0;padding-top:6px}
+  .logo{
+    width:40px;height:40px;border:1px solid var(--ink);border-radius:3px;
+    display:flex;align-items:center;justify-content:center;
+    font-family:var(--serif);font-weight:500;font-size:15px;color:var(--ink);
+    background:#fff;letter-spacing:-0.5px;
+  }
+  .role-meta{display:flex;flex-direction:column;gap:3px}
+  .role-when{
+    font-family:var(--mono);font-size:11px;letter-spacing:.5px;color:var(--ink-3);
+    text-transform:uppercase;
+  }
+  .role-title{font-size:16px;font-weight:500;color:var(--ink);line-height:1.3}
+  .role-title .co{font-weight:500}
+  .role-desc{font-size:14px;color:var(--ink-2);line-height:1.5;margin-top:2px}
+
+  .closing{
+    margin-top:32px;font-size:15px;color:var(--ink-2);line-height:1.6;
+    border-top:1px solid var(--rule);padding-top:22px;
+  }
+  .closing strong{color:var(--ink);font-weight:500}
+
+  /* projects page */
+  .proj-head{
+    display:flex;align-items:flex-end;justify-content:space-between;
+    gap:18px;margin-bottom:6px;flex-wrap:wrap;
+  }
+  .proj-head h1{
+    font-family:var(--serif);font-weight:400;font-size:36px;line-height:1;
+    margin:0;letter-spacing:-0.5px;
+  }
+  .proj-head .sub{font-size:14px;color:var(--ink-3);margin-top:6px;max-width:42ch}
+  .proj-filter{display:flex;align-items:center;gap:8px}
+  .proj-filter label{font-family:var(--mono);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink-3)}
+  .proj-filter select{
+    -webkit-appearance:none;appearance:none;
+    border:1px solid var(--rule);border-radius:3px;background:#fff;
+    font-family:var(--mono);font-size:11px;letter-spacing:.5px;text-transform:uppercase;
+    color:var(--ink-2);padding:4px 22px 4px 10px;
+    background-image:
+      linear-gradient(45deg,transparent 50%,var(--ink-2) 50%),
+      linear-gradient(135deg,var(--ink-2) 50%,transparent 50%);
+    background-position:calc(100% - 11px) 50%, calc(100% - 7px) 50%;
+    background-size:4px 4px;background-repeat:no-repeat;
+    cursor:pointer;
+  }
+  .proj-filter select:hover{border-color:var(--ink-3);color:var(--ink)}
+
+  .proj-list{margin-top:28px;display:flex;flex-direction:column}
+  .proj-item{
+    display:grid;grid-template-columns:180px 1fr;gap:24px;
+    padding:24px 0;border-top:1px solid var(--rule);
+  }
+  .proj-item:first-child{border-top:0;padding-top:8px}
+  .shot{
+    aspect-ratio:4/3;border:1px solid var(--rule);border-radius:3px;
+    background:#f4f2eb;overflow:hidden;position:relative;
+  }
+  /* faux UI in screenshot placeholders */
+  .shot.s1{background:
+    linear-gradient(0deg,transparent 0 70%,#eae6d8 70% 71%,transparent 71%),
+    linear-gradient(0deg,transparent 0 35%,#eae6d8 35% 36%,transparent 36%),
+    radial-gradient(circle at 25% 50%, #d8d3c2 0 18px, transparent 19px),
+    linear-gradient(180deg,#f7f4ec,#ece8d8)}
+  .shot.s2{background:
+    repeating-linear-gradient(90deg,#eae6d8 0 1px,transparent 1px 22%),
+    repeating-linear-gradient(0deg,#eae6d8 0 1px,transparent 1px 28%),
+    #f7f4ec}
+  .shot.s3{background:
+    radial-gradient(circle at 70% 30%,#d8d3c2 0 38px,transparent 40px),
+    linear-gradient(0deg,transparent 0 55%,#eae6d8 55% 56%,transparent 56%),
+    linear-gradient(0deg,transparent 0 30%,#eae6d8 30% 31%,transparent 31%),
+    linear-gradient(180deg,#fbf8f0,#efece0)}
+  .shot.s4{background:
+    repeating-linear-gradient(135deg,#ece8d8 0 8px,#f6f3ea 8px 16px)}
+  .shot.s5{background:
+    linear-gradient(180deg,#f4f1e6 0 18px,transparent 18px),
+    linear-gradient(0deg,transparent 0 65%,#e6e2d2 65% 66%,transparent 66%),
+    linear-gradient(0deg,transparent 0 40%,#e6e2d2 40% 41%,transparent 41%),
+    #faf7ee}
+  .shot.s6{background:
+    radial-gradient(circle at 30% 70%,#d4cfbe 0 24px,transparent 26px),
+    radial-gradient(circle at 65% 35%,#d4cfbe 0 18px,transparent 20px),
+    linear-gradient(180deg,#f6f3ea,#ece8d8)}
+
+  .proj-body{display:flex;flex-direction:column;min-width:0}
+  .proj-meta{
+    display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;
+    font-family:var(--mono);font-size:11px;letter-spacing:.5px;color:var(--ink-3);
+    text-transform:uppercase;
+  }
+  .proj-title{
+    font-family:var(--serif);font-weight:500;font-size:22px;line-height:1.2;
+    margin:6px 0 8px;letter-spacing:-0.2px;
+  }
+  .proj-desc{font-size:15px;color:var(--ink-2);line-height:1.55;margin:0}
+  .pill{
+    display:inline-flex;align-items:center;gap:6px;
+    font-family:var(--mono);font-size:10px;letter-spacing:1px;text-transform:uppercase;
+    border:1px solid var(--ink);color:var(--ink);background:transparent;
+    padding:2px 9px;border-radius:20px;line-height:1.4;
+  }
+  .pill::before{
+    content:"";width:6px;height:6px;border-radius:50%;background:var(--ink);
+  }
+  .pill.investigate{color:var(--ink-3);border-color:var(--ink-4)}
+  .pill.investigate::before{background:transparent;border:1px solid var(--ink-3)}
+  .pill.prototype::before{background:var(--ink);opacity:.4}
+  .pill.experiment::before{background:var(--ink);opacity:.7}
+  .pill.launched::before{background:var(--ink)}
+
+  /* footer */
+  .foot{
+    margin-top:48px;padding-top:18px;border-top:1px solid var(--rule);
+    font-family:var(--mono);font-size:11px;letter-spacing:.5px;color:var(--ink-3);
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;
+  }
+
+  /* responsive */
+  @media (max-width: 760px){
+    .layout{grid-template-columns:1fr;gap:36px;padding:40px 24px 80px}
+    .side{position:static}
+    .nav{flex-direction:row;flex-wrap:wrap;gap:14px}
+    .nav a{padding-left:0;margin-left:0;border:0}
+    .nav a.cur{border:0;text-decoration:underline;text-underline-offset:4px;text-decoration-thickness:2px}
+    .proj-item{grid-template-columns:1fr;gap:14px}
+    .shot{max-width:280px}
+    .intro{grid-template-columns:72px 1fr;gap:16px}
+    .avatar{width:72px;height:72px}
+    .greeting{font-size:26px}
+  }
+
+  /* tweak-driven variants */
+  body.avatar-square .avatar{border-radius:6px}
+  body.avatar-portrait .avatar{border-radius:6px;aspect-ratio:3/4;width:96px;height:auto}
+  body.logos-filled .logo{background:var(--ink);color:var(--paper)}
+  body.no-current .current{display:none}
+  body.density-compact .role-row{padding:10px 0}
+  body.density-compact .proj-item{padding:16px 0}
+</style>
+</head>
+<body>
+
+<div class="layout">
+
+  <!-- ============ SIDEBAR ============ -->
+  <aside class="side">
+    <h2 class="brand">David Temple<small>dtemple.me</small></h2>
+
+    <nav class="nav" id="primary-nav">
+      <a href="#about" data-route="about" class="cur">About</a>
+      <a href="#projects" data-route="projects">Projects</a>
+      <a href="#" tabindex="-1">Writing</a>
+      <a href="#" tabindex="-1">Coding</a>
+      <a href="#" tabindex="-1">Quick-Guide to Product</a>
+    </nav>
+
+    <div class="group-label">Contact</div>
+    <div class="contact">
+      <a href="#">LinkedIn</a>
+      <a href="#">Twitter</a>
+      <a href="#">Email</a>
+    </div>
+  </aside>
+
+  <!-- ============ CONTENT ============ -->
+  <main class="content">
+
+    <!-- ====== ABOUT ====== -->
+    <section class="page active" data-route="about" data-screen-label="About">
+      <div class="intro">
+        <div class="avatar" aria-hidden="true"></div>
+        <div>
+          <h1 class="greeting">Hi, I'm <em>David</em>.</h1>
+          <div class="sub-greeting">PM · building things with AI · dad</div>
+        </div>
+      </div>
+
+      <!-- "currently exploring" line, per comment -->
+      <div class="current">
+        <div class="marker" aria-hidden="true"></div>
+        <div class="text">
+          <strong>Currently exploring.</strong> In between roles, I'm building little
+          things with AI &mdash; for fun, and to learn what's now possible.
+          See what I'm working on in <a href="#projects" class="link" data-route-link>Projects</a>.
+        </div>
+      </div>
+
+      <div class="section-label">Roles</div>
+
+      <div class="roles">
+        <div class="role-row">
+          <div class="logo">P</div>
+          <div class="role-meta">
+            <div class="role-when">2017 — 2026</div>
+            <div class="role-title">VP of Product Management, <span class="co">Pinterest</span></div>
+            <div class="role-desc">Led emerging products initiatives, content, creator and homefeed.</div>
+          </div>
+        </div>
+
+        <div class="role-row">
+          <div class="logo">HS</div>
+          <div class="role-meta">
+            <div class="role-when">2014 — 2017</div>
+            <div class="role-title">CEO &amp; cofounder, <span class="co">Hello Scout</span></div>
+            <div class="role-desc">Connected guests at boutique hotels with last-minute, off-the-beaten-path tours.</div>
+          </div>
+        </div>
+
+        <div class="role-row">
+          <div class="logo">K</div>
+          <div class="role-meta">
+            <div class="role-when">2011 — 2014</div>
+            <div class="role-title">Director of Product, <span class="co">Klout</span></div>
+            <div class="role-desc">Helped content creators harness their influence.</div>
+          </div>
+        </div>
+
+        <div class="role-row">
+          <div class="logo">Li</div>
+          <div class="role-meta">
+            <div class="role-when">2008 — 2011</div>
+            <div class="role-title">Director of Product, <span class="co">LiveIntent</span></div>
+            <div class="role-desc">Built the first location-aware, real-time bidding platform for email.</div>
+          </div>
+        </div>
+      </div>
+
+      <p class="closing">
+        <strong>I love</strong> product, learning from great people, and adventures of all
+        types. See my <a href="#" class="link">product portfolio</a> or
+        <a href="#" class="link">quick-guide to product</a>.
+      </p>
+
+      <div class="foot">
+        <span>dtemple.me — est. 2009</span>
+        <span>updated may '26</span>
+      </div>
+    </section>
+
+    <!-- ====== PROJECTS ====== -->
+    <section class="page" data-route="projects" data-screen-label="Projects">
+      <div class="proj-head">
+        <div>
+          <h1>Projects.</h1>
+          <div class="sub">An open notebook of things I'm building with AI. Newest first.</div>
+        </div>
+        <div class="proj-filter">
+          <label for="stage">Stage</label>
+          <select id="stage">
+            <option value="all">All</option>
+            <option value="investigate">Investigate</option>
+            <option value="prototype">Prototype</option>
+            <option value="experiment">Market experiment</option>
+            <option value="launched">Launched</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="proj-list" id="projList">
+
+        <article class="proj-item" data-stage="launched">
+          <div class="shot s1"></div>
+          <div class="proj-body">
+            <div class="proj-meta">
+              <span class="date">May 12, 2026</span>
+              <span class="pill launched">launched</span>
+            </div>
+            <h3 class="proj-title">Project Title One</h3>
+            <p class="proj-desc">
+              A two-to-four sentence description of the project &mdash; what it does, who
+              it's for, and the bet I'm making with it. Kept short, like a blog post
+              intro. The screenshot does the rest of the talking.
+            </p>
+          </div>
+        </article>
+
+        <article class="proj-item" data-stage="experiment">
+          <div class="shot s2"></div>
+          <div class="proj-body">
+            <div class="proj-meta">
+              <span class="date">Apr 28, 2026</span>
+              <span class="pill experiment">market experiment</span>
+            </div>
+            <h3 class="proj-title">Project Title Two</h3>
+            <p class="proj-desc">
+              Live with a handful of users to see whether anyone keeps coming back.
+              Notes on what I'm learning go alongside the description as I go.
+            </p>
+          </div>
+        </article>
+
+        <article class="proj-item" data-stage="prototype">
+          <div class="shot s3"></div>
+          <div class="proj-body">
+            <div class="proj-meta">
+              <span class="date">Apr 14, 2026</span>
+              <span class="pill prototype">prototype</span>
+            </div>
+            <h3 class="proj-title">Project Title Three</h3>
+            <p class="proj-desc">
+              Working end-to-end but not yet out in the world. Mostly built to see if
+              the core idea actually feels good to use.
+            </p>
+          </div>
+        </article>
+
+        <article class="proj-item" data-stage="prototype">
+          <div class="shot s5"></div>
+          <div class="proj-body">
+            <div class="proj-meta">
+              <span class="date">Mar 30, 2026</span>
+              <span class="pill prototype">prototype</span>
+            </div>
+            <h3 class="proj-title">Project Title Four</h3>
+            <p class="proj-desc">
+              A second prototype, exploring a different angle on the same problem.
+            </p>
+          </div>
+        </article>
+
+        <article class="proj-item" data-stage="investigate">
+          <div class="shot s4"></div>
+          <div class="proj-body">
+            <div class="proj-meta">
+              <span class="date">Mar 12, 2026</span>
+              <span class="pill investigate">investigate</span>
+            </div>
+            <h3 class="proj-title">Project Title Five</h3>
+            <p class="proj-desc">
+              A pitch I'm thinking through. Probably won't ship &mdash; but useful to
+              write down and share early to see if anyone else perks up at the idea.
+            </p>
+          </div>
+        </article>
+
+        <article class="proj-item" data-stage="investigate">
+          <div class="shot s6"></div>
+          <div class="proj-body">
+            <div class="proj-meta">
+              <span class="date">Feb 24, 2026</span>
+              <span class="pill investigate">investigate</span>
+            </div>
+            <h3 class="proj-title">Project Title Six</h3>
+            <p class="proj-desc">
+              Earliest stage &mdash; a one-paragraph note about why this might be worth
+              pursuing, and what would have to be true.
+            </p>
+          </div>
+        </article>
+
+      </div>
+
+      <div class="foot">
+        <span id="projCount">6 projects</span>
+        <span>rss · subscribe</span>
+      </div>
+    </section>
+
+  </main>
+
+</div>
+
+<!-- ============ tweaks panel ============ -->
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+
+<script>
+  // ---------- routing ----------
+  function setRoute(route){
+    if (!route) route = 'about';
+    document.querySelectorAll('.page').forEach(p => {
+      p.classList.toggle('active', p.dataset.route === route);
+    });
+    document.querySelectorAll('#primary-nav a[data-route]').forEach(a => {
+      a.classList.toggle('cur', a.dataset.route === route);
+    });
+    window.scrollTo({top:0, behavior:'instant'});
+  }
+  function routeFromHash(){
+    const h = (location.hash || '#about').replace(/^#/,'');
+    setRoute(h);
+  }
+  window.addEventListener('hashchange', routeFromHash);
+  document.addEventListener('click', e => {
+    const a = e.target.closest('a[data-route], a[data-route-link]');
+    if (!a) return;
+    const route = a.dataset.route || (a.getAttribute('href') || '').replace(/^#/,'');
+    if (!route) return;
+    e.preventDefault();
+    location.hash = '#' + route;
+  });
+  routeFromHash();
+
+  // ---------- filter ----------
+  const stage = document.getElementById('stage');
+  const list = document.getElementById('projList');
+  const count = document.getElementById('projCount');
+  stage.addEventListener('change', () => {
+    const v = stage.value;
+    let shown = 0;
+    list.querySelectorAll('.proj-item').forEach(it => {
+      const ok = v === 'all' || it.dataset.stage === v;
+      it.style.display = ok ? '' : 'none';
+      if (ok) shown++;
+    });
+    count.textContent = shown + (shown === 1 ? ' project' : ' projects');
+  });
+</script>
+
+<script type="text/babel">
+  const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+    "avatarShape": "round",
+    "logoStyle": "outline",
+    "showCurrent": false,
+    "density": "comfy"
+  }/*EDITMODE-END*/;
+
+  function App(){
+    const [tweaks, setTweak] = useTweaks(TWEAK_DEFAULTS);
+
+    React.useEffect(() => {
+      const b = document.body;
+      b.classList.remove('avatar-round','avatar-square','avatar-portrait');
+      b.classList.add('avatar-' + tweaks.avatarShape);
+      b.classList.toggle('logos-filled', tweaks.logoStyle === 'filled');
+      b.classList.toggle('no-current', !tweaks.showCurrent);
+      b.classList.toggle('density-compact', tweaks.density === 'compact');
+    }, [tweaks]);
+
+    return (
+      <TweaksPanel title="Tweaks">
+        <TweakSection title="Photo">
+          <TweakRadio label="Shape"
+            value={tweaks.avatarShape}
+            options={[
+              {label:'Round', value:'round'},
+              {label:'Square', value:'square'},
+              {label:'Portrait', value:'portrait'},
+            ]}
+            onChange={v => setTweak('avatarShape', v)} />
+        </TweakSection>
+        <TweakSection title="Role logos">
+          <TweakRadio label="Style"
+            value={tweaks.logoStyle}
+            options={[{label:'Outline', value:'outline'},{label:'Filled', value:'filled'}]}
+            onChange={v => setTweak('logoStyle', v)} />
+        </TweakSection>
+        <TweakSection title="Layout">
+          <TweakToggle label="Show 'currently exploring' callout"
+            value={tweaks.showCurrent}
+            onChange={v => setTweak('showCurrent', v)} />
+          <TweakRadio label="Density"
+            value={tweaks.density}
+            options={[{label:'Comfy', value:'comfy'},{label:'Compact', value:'compact'}]}
+            onChange={v => setTweak('density', v)} />
+        </TweakSection>
+      </TweaksPanel>
+    );
+  }
+
+  const root = document.createElement('div');
+  document.body.appendChild(root);
+  ReactDOM.createRoot(root).render(<App/>);
+</script>
+
+</body>
+</html>
