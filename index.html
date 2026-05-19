@@ -555,10 +555,10 @@
             <div>
               <div class="colhead">What's built</div>
               <ul class="built">
-                <li><b>Remote MCP server on Cloudflare Workers</b> — a stateless JSON-RPC server that exposes the wiki to any MCP-capable client (Claude iOS app, claude.ai, etc.), authenticated via a bearer token.</li>
-                <li><b>GitHub App integration</b> — reads and writes wiki pages directly to a GitHub repo via the GitHub Apps API (JWT signing, cached installation tokens, one commit per tool call), with no local clone needed.</li>
-                <li><b>Full CRUD tool suite</b> — read tools (get_schema, get_index, get_page, list_pages, search_wiki, get_log, list_raw_sources, get_raw_source) and write tools (create_page, update_page, append_log) that maintain index.md and log.md as side effects.</li>
-                <li><b>Schema enforcement</b> — frontmatter validation and slug rules (defined in src/schema.ts, with test fixtures for all page types) returned as MCP instructions on initialize so every session picks up wiki conventions automatically.</li>
+                <li><span><b>Remote MCP server on Cloudflare Workers</b> — a stateless JSON-RPC server that exposes the wiki to any MCP-capable client (Claude iOS app, claude.ai, etc.), authenticated via a bearer token.</span></li>
+                <li><span><b>GitHub App integration</b> — reads and writes wiki pages directly to a GitHub repo via the GitHub Apps API (JWT signing, cached installation tokens, one commit per tool call), with no local clone needed.</span></li>
+                <li><span><b>Full CRUD tool suite</b> — read tools (get_schema, get_index, get_page, list_pages, search_wiki, get_log, list_raw_sources, get_raw_source) and write tools (create_page, update_page, append_log) that maintain index.md and log.md as side effects.</span></li>
+                <li><span><b>Schema enforcement</b> — frontmatter validation and slug rules (defined in src/schema.ts, with test fixtures for all page types) returned as MCP instructions on initialize so every session picks up wiki conventions automatically.</span></li>
               </ul>
             </div>
             <div>
