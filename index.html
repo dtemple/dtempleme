@@ -630,45 +630,35 @@
         <!-- prototype — with learnings, 2 screenshots -->
         <article class="proj-item" data-stage="prototype">
           <div class="proj-meta">
-            <span class="date">Apr 14, 2026</span>
+            <span class="date">April, 2026</span>
             <span class="pill prototype">prototype</span>
           </div>
-          <h3 class="proj-title">Project Title Two</h3>
+          <h3 class="proj-title">Opportunity assessment agent debate</h3>
           <p class="proj-overview">
-            A working end-to-end prototype, built to see whether the core idea actually feels good
-            to use. Not yet shared widely — testing on a handful of friendly users.
+            Opportunity Agents uses Claude Code multi-agent teams to run structured debates evaluating software business opportunities for solo AI-assisted founders. The idea was to see how effectively a team of agents could work together to identify solo-founder business opportunities.
           </p>
 
-          <div class="carousel" data-carousel>
+          <div class="carousel solo" data-carousel>
             <div class="viewport">
-              <span class="counter"><span data-cur>1</span> / <span data-total>2</span></span>
-              <div class="slide active"><div class="shot s3" data-cap="main view"></div></div>
-              <div class="slide"><div class="shot s5" data-cap="detail"></div></div>
-              <div class="controls">
-                <div class="dots" data-dots></div>
-                <div class="nav-btns">
-                  <button data-prev aria-label="previous">‹</button>
-                  <button data-next aria-label="next">›</button>
-                </div>
-              </div>
+              <div class="slide active"><div class="shot"><img src="assets/screenshots/opportunity-agents.png" alt="Solo Founder Opportunity Analysis output" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block;"></div></div>
             </div>
           </div>
 
           <div class="proj-detail">
             <div>
-              <div class="colhead">What got built</div>
+              <div class="colhead">What was built</div>
               <ul class="built">
-                <li>Core capture flow with single-prompt interaction</li>
-                <li>Local storage with import / export</li>
-                <li>Simple search and filter</li>
-                <li>Lightweight onboarding</li>
+                <li>A multi-agent debate system with four specialized roles (Research Specialist, MBA Strategist, User Research Specialist, CEO/Synthesizer)</li>
+                <li>A structured evaluation rubric scoring opportunities across five dimensions: market size, solo buildability, acquisition simplicity, defensibility, and willingness to pay</li>
+                <li>An output pipeline where each agent writes to their own file and the CEO synthesizes a final ranked assessment</li>
               </ul>
             </div>
             <div>
-              <div class="colhead">Key learnings</div>
+              <div class="colhead">Takeaways</div>
               <ol class="learnings">
-                <li>The first 30 seconds are everything. If the empty state isn't intriguing, users bounce.</li>
-                <li>Pen-and-paper is the real competitor, not other apps. The bar is higher than it looks.</li>
+                <li>Interesting output, but would take some work to make genuinely useful.</li>
+                <li>Writing the prompts for the debating agents was the most interesting part.</li>
+                <li>The multi-agent teams part would be reusable in other contexts.</li>
               </ol>
             </div>
           </div>
