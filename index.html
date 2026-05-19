@@ -621,6 +621,7 @@
                 <li>Good learning project since it had a large and complex data/crawling component.</li>
                 <li>Ultimately I built way too much product for the scope of the user problem.</li>
                 <li>The combo of deterministic rules with LLM-powered source checking and user-facing descriptions proved powerful; this is likely a model I'll use again.</li>
+                <li>Ugh, that purple</li>
               </ol>
             </div>
           </div>
@@ -659,6 +660,43 @@
                 <li>Interesting output, but would take some work to make genuinely useful.</li>
                 <li>Writing the prompts for the debating agents was the most interesting part.</li>
                 <li>The multi-agent teams part would be reusable in other contexts.</li>
+              </ol>
+            </div>
+          </div>
+        </article>
+
+
+                <!-- prototype — with learnings, 2 screenshots -->
+        <article class="proj-item" data-stage="prototype">
+          <div class="proj-meta">
+            <span class="date">April, 2026</span>
+            <span class="pill prototype">prototype</span>
+          </div>
+          <h3 class="proj-title">Mill Valley Permits app</h3>
+          <p class="proj-overview">
+            Mill Valley Permits is a native iOS/SwiftUI app that guides homeowners through the permit application process for home improvement projects in Mill Valley, CA. It combines an AI-powered intake chat flow with a fee estimator and document generation to turn a bureaucratic process into a guided, conversational experience.
+          </p>
+
+          <div class="carousel solo" data-carousel>
+            <div class="viewport">
+              <div class="slide active"><div class="shot"><img src="assets/screenshots/opportunity-agents.png" alt="Solo Founder Opportunity Analysis output" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block;"></div></div>
+            </div>
+          </div>
+
+          <div class="proj-detail">
+            <div>
+              <div class="colhead">What was built</div>
+              <ul class="built">
+                <li>AI-driven intake chat — a dynamic conversational intake flow (DynamicIntakeChatView, IntakeChatView) that asks project-specific questions and collects the data needed to fill out permit forms.</li>
+                <li>Fee estimator engine — a FeeEngine + FeeSchedule that calculates permit costs based on project facts, with a price calculator surfaced to users before they commit.</li>
+                <li>Permit packet generation — produces a PermitPacket with pre-filled form fields and a PDF preview (PDFPreviewView, PermitPacketView), ready to submit to the city.</li>              </ul>
+            </div>
+            <div>
+              <div class="colhead">Takeaways</div>
+              <ol class="learnings">
+                <li>Fun to implement a chat UX in a native iOS setting.</li>
+                <li>Built some real parcel/jurisdiction logic, which gave me good visibility into the complexity of government forms</li>
+                <li>Lots of legal liability stuff, which makes this not worth pursuing.</li>
               </ol>
             </div>
           </div>
