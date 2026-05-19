@@ -15,6 +15,8 @@
     --ink-4:  #c8c5bd;
     --paper:  #fdfcf9;
     --rule:   #e5e2d8;
+    --soft:   #f4f2eb;
+    --soft-2: #ece8d8;
     --hi:     #1a1a1a;
     --serif:  'Newsreader', Georgia, 'Times New Roman', serif;
     --mono:   'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
@@ -169,13 +171,18 @@
 
   .proj-list{margin-top:28px;display:flex;flex-direction:column}
   .proj-item{
-    display:grid;grid-template-columns:180px 1fr;gap:24px;
-    padding:24px 0;border-top:1px solid var(--rule);
+    display:block;padding:48px 0 8px;border-top:1px solid var(--rule);
   }
   .proj-item:first-child{border-top:0;padding-top:8px}
   .shot{
-    aspect-ratio:4/3;border:1px solid var(--rule);border-radius:3px;
-    background:#f4f2eb;overflow:hidden;position:relative;
+    border:1px solid var(--rule);border-radius:3px;
+    background:var(--soft);overflow:hidden;position:relative;
+  }
+  .shot[data-cap]::after{
+    content:attr(data-cap);
+    position:absolute;right:10px;bottom:10px;
+    font-family:var(--mono);font-size:9px;letter-spacing:.8px;text-transform:uppercase;
+    color:var(--ink-3);background:rgba(253,252,249,.85);padding:2px 6px;border-radius:2px;
   }
   /* faux UI in screenshot placeholders */
   .shot.s1{background:
@@ -203,6 +210,34 @@
     radial-gradient(circle at 30% 70%,#d4cfbe 0 24px,transparent 26px),
     radial-gradient(circle at 65% 35%,#d4cfbe 0 18px,transparent 20px),
     linear-gradient(180deg,#f6f3ea,#ece8d8)}
+  .shot.landing{background:
+    linear-gradient(180deg,#f7f4ec 0 32px,transparent 32px),
+    linear-gradient(0deg,transparent 0 72%,var(--soft-2) 72% 73%,transparent 73%),
+    linear-gradient(0deg,transparent 0 40%,var(--soft-2) 40% 41%,transparent 41%),
+    radial-gradient(circle at 50% 56%, #d8d3c2 0 30px, transparent 32px),
+    linear-gradient(180deg,#fbf8f0,#ece8d8)}
+  .shot.wizard{background:
+    linear-gradient(180deg,#f7f4ec 0 24px,transparent 24px),
+    linear-gradient(0deg,transparent 0 56%,var(--soft-2) 56% 57%,transparent 57%),
+    repeating-linear-gradient(0deg,transparent 0 18px,var(--soft-2) 18px 19px),
+    #fbf8f0}
+  .shot.workspace{background:
+    linear-gradient(90deg,#ece8d8 0 28%,transparent 28%),
+    linear-gradient(0deg,transparent 0 22%,var(--soft-2) 22% 23%,transparent 23%),
+    repeating-linear-gradient(0deg,transparent 0 26px,#eae6d8 26px 27px),
+    #faf7ee}
+  .shot.workbench{background:
+    radial-gradient(circle at 16% 28%, #d8d3c2 0 16px, transparent 18px),
+    radial-gradient(circle at 16% 58%, #d8d3c2 0 16px, transparent 18px),
+    radial-gradient(circle at 16% 88%, #d8d3c2 0 16px, transparent 18px),
+    linear-gradient(90deg,transparent 0 26%,var(--soft-2) 26% 26.5%,transparent 26.5%),
+    #f7f4ec}
+  .shot.notebook{background:
+    repeating-linear-gradient(0deg,transparent 0 22px,#e5e1d2 22px 23px),
+    linear-gradient(90deg,#ece8d8 0 12%,transparent 12%),
+    #faf7ee}
+  .shot.sketch{background:
+    repeating-linear-gradient(135deg,#ece8d8 0 10px,#f6f3ea 10px 20px)}
 
   .proj-body{display:flex;flex-direction:column;min-width:0}
   .proj-meta{
@@ -211,10 +246,87 @@
     text-transform:uppercase;
   }
   .proj-title{
-    font-family:var(--serif);font-weight:500;font-size:22px;line-height:1.2;
-    margin:6px 0 8px;letter-spacing:-0.2px;
+    font-family:var(--serif);font-weight:500;font-size:26px;line-height:1.15;
+    margin:6px 0 12px;letter-spacing:-0.3px;
   }
   .proj-desc{font-size:15px;color:var(--ink-2);line-height:1.55;margin:0}
+  .proj-overview{font-size:17px;color:var(--ink-2);line-height:1.5;margin:0;max-width:62ch}
+
+  /* carousel */
+  .carousel{position:relative;margin:24px 0 0}
+  .carousel .viewport{
+    position:relative;aspect-ratio:16/9;border-radius:3px;overflow:hidden;
+    border:1px solid var(--rule);background:var(--soft);
+  }
+  .carousel .slide{
+    position:absolute;inset:0;opacity:0;transition:opacity .35s ease;pointer-events:none;
+  }
+  .carousel .slide.active{opacity:1;pointer-events:auto}
+  .carousel .slide .shot{border:0;border-radius:0;width:100%;height:100%}
+  .carousel .counter{
+    position:absolute;left:10px;top:10px;
+    font-family:var(--mono);font-size:10px;letter-spacing:.8px;text-transform:uppercase;
+    color:var(--ink-2);background:rgba(253,252,249,.92);
+    padding:3px 8px;border-radius:12px;border:1px solid var(--rule);
+  }
+  .carousel .controls{
+    position:absolute;inset:auto 10px 10px 10px;
+    display:flex;align-items:center;gap:10px;justify-content:flex-end;
+  }
+  .carousel .dots{
+    display:flex;gap:6px;margin-right:auto;
+    background:rgba(253,252,249,.92);padding:5px 8px;border-radius:14px;border:1px solid var(--rule);
+  }
+  .carousel .dots button{
+    width:7px;height:7px;border-radius:50%;border:0;padding:0;background:var(--ink-4);
+    cursor:pointer;transition:background .15s;
+  }
+  .carousel .dots button[aria-current="true"]{background:var(--ink)}
+  .carousel .nav-btns{display:flex;gap:6px}
+  .carousel .nav-btns button{
+    width:28px;height:28px;border-radius:50%;border:1px solid var(--rule);
+    background:rgba(253,252,249,.95);cursor:pointer;color:var(--ink-2);
+    font-family:var(--mono);font-size:13px;line-height:1;
+    display:flex;align-items:center;justify-content:center;
+    transition:color .12s, border-color .12s;
+  }
+  .carousel .nav-btns button:hover{color:var(--ink);border-color:var(--ink-3)}
+  .carousel.solo .controls{display:none}
+  .carousel.solo .counter{display:none}
+
+  /* two-col detail (built + learnings) */
+  .proj-detail{
+    display:grid;grid-template-columns:1.1fr 1fr;gap:36px;
+    padding-top:24px;margin-top:22px;border-top:1px solid var(--rule);
+  }
+  .proj-detail .colhead{
+    font-family:var(--mono);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;
+    color:var(--ink-3);margin:0 0 10px;
+  }
+  .proj-detail ul.built{
+    list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:7px;
+  }
+  .proj-detail ul.built li{
+    display:grid;grid-template-columns:18px 1fr;gap:8px;align-items:flex-start;
+    font-size:15px;color:var(--ink-2);line-height:1.45;
+  }
+  .proj-detail ul.built li::before{
+    content:"";display:block;width:6px;height:6px;border-radius:50%;background:var(--ink);
+    margin-top:8px;margin-left:5px;
+  }
+  .proj-detail ol.learnings{
+    list-style:none;padding:0;margin:0;counter-reset:l;display:flex;flex-direction:column;gap:16px;
+  }
+  .proj-detail ol.learnings li{
+    counter-increment:l;display:grid;grid-template-columns:30px 1fr;gap:10px;
+    font-size:15px;color:var(--ink-2);line-height:1.5;
+  }
+  .proj-detail ol.learnings li::before{
+    content:counter(l,decimal-leading-zero);
+    font-family:var(--mono);font-size:11px;color:var(--ink-3);
+    border:1px solid var(--rule);border-radius:2px;text-align:center;
+    padding:2px 0;height:22px;background:#fff;
+  }
   .pill{
     display:inline-flex;align-items:center;gap:6px;
     font-family:var(--mono);font-size:10px;letter-spacing:1px;text-transform:uppercase;
@@ -250,8 +362,8 @@
     .nav{flex-direction:row;flex-wrap:wrap;gap:14px}
     .nav a{padding-left:0;margin-left:0;border:0}
     .nav a.cur{border:0;text-decoration:underline;text-underline-offset:4px;text-decoration-thickness:2px}
-    .proj-item{grid-template-columns:1fr;gap:14px}
-    .shot{max-width:280px}
+    .proj-item{padding:36px 0 8px}
+    .proj-detail{grid-template-columns:1fr;gap:28px}
     .intro{grid-template-columns:72px 1fr;gap:16px}
     .avatar{width:72px;height:72px}
     .greeting{font-size:26px}
@@ -411,7 +523,7 @@
       <div class="proj-head">
         <div>
           <h1>Projects.</h1>
-          <div class="sub">An open notebook of things I'm building with AI. Newest first.</div>
+          <div class="sub">Things I'm tinkering with.</div>
         </div>
         <div class="proj-filter">
           <label for="stage">Stage</label>
@@ -421,106 +533,225 @@
             <option value="prototype">Prototype</option>
             <option value="experiment">Market experiment</option>
             <option value="launched">Launched</option>
+            <option value="archived">Archived</option>
           </select>
         </div>
       </div>
 
       <div class="proj-list" id="projList">
 
-        <article class="proj-item" data-stage="launched">
-          <div class="shot s1"></div>
-          <div class="proj-body">
-            <div class="proj-meta">
-              <span class="date">May 12, 2026</span>
-              <span class="pill launched">launched</span>
-            </div>
-            <h3 class="proj-title">Project Title One</h3>
-            <p class="proj-desc">
-              A two-to-four sentence description of the project &mdash; what it does, who
-              it's for, and the bet I'm making with it. Kept short, like a blog post
-              intro. The screenshot does the rest of the talking.
-            </p>
-          </div>
-        </article>
-
+                <!-- market experiment — with carousel + built + learnings -->
         <article class="proj-item" data-stage="experiment">
-          <div class="shot s2"></div>
-          <div class="proj-body">
-            <div class="proj-meta">
-              <span class="date">Apr 28, 2026</span>
-              <span class="pill experiment">market experiment</span>
+          <div class="proj-meta">
+            <span class="date">May, 2026</span>
+            <span class="pill experiment">Launched</span>
+          </div>
+          <h3 class="proj-title">dtOS &mdash; A self-updating personal knowledge base</h3>
+          <p class="proj-overview">
+            Inspired by a combo of <a href="https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f" target="_blank">Karpathy's LLM Wiki post</a> and the <a href="https://aidbagentos.ai/home" target="_blank">AI DB agent OS</a>, this is an MCP-based knowledge base that sits in the background for every claude or chatgpt discussion. Without prompting, it pulls out the key ideas to create a persistent, compounding artifact that constantly gets richer. This artifact can be read as context for each new project, etc. Obsidian is the IDE.
+          </p>
+
+          <div class="proj-detail">
+            <div>
+              <div class="colhead">What's built</div>
+              <ul class="built">
+                <li><b>Remote MCP server on Cloudflare Workers</b> — a stateless JSON-RPC server that exposes the wiki to any MCP-capable client (Claude iOS app, claude.ai, etc.), authenticated via a bearer token.</li>
+                <li><b>GitHub App integration</b> — reads and writes wiki pages directly to a GitHub repo via the GitHub Apps API (JWT signing, cached installation tokens, one commit per tool call), with no local clone needed.</li>
+                <li><b>Full CRUD tool suite</b> — read tools (get_schema, get_index, get_page, list_pages, search_wiki, get_log, list_raw_sources, get_raw_source) and write tools (create_page, update_page, append_log) that maintain index.md and log.md as side effects.</li>
+                <li><b>Schema enforcement</b> — frontmatter validation and slug rules (defined in src/schema.ts, with test fixtures for all page types) returned as MCP instructions on initialize so every session picks up wiki conventions automatically.</li>
+              </ul>
             </div>
-            <h3 class="proj-title">Project Title Two</h3>
-            <p class="proj-desc">
-              Live with a handful of users to see whether anyone keeps coming back.
-              Notes on what I'm learning go alongside the description as I go.
-            </p>
+            <div>
+              <div class="colhead">Takeaways so far</div>
+              <ol class="learnings">
+                <li>Most useful when scoped to something that is changing regularly but not too broad. I'm using it to collect new ideas and expand on them. I can send it context and it fleshes them out.</li>
+                <li>Great for bootstrapping claude.md for new projects.</li>
+                <li>Potential next steps: productize it in a way where others could use it to do something similar.</li>
+              </ol>
+            </div>
           </div>
         </article>
 
+                <!-- market experiment — with carousel + built + learnings -->
+        <article class="proj-item" data-stage="experiment">
+          <div class="proj-meta">
+            <span class="date">March, 2026</span>
+            <span class="pill experiment">Archived</span>
+          </div>
+          <h3 class="proj-title">RebateGuard &mdash; the easiest way to claim heat pump rebates</h3>
+          <p class="proj-overview">
+            Inspired by the complexity of claiming my own energy rebate, I built a tool to simplify the process of discovering and claiming heat pump rebates. RebateGuard is a web app that identifies which rebates apply to the user and guides them through the steps to claim it, handling the paperwork on their behalf. The goal was to make it as easy as possible for homeowners to take advantage of energy-saving incentives.
+          </p>
+
+          <div class="carousel" data-carousel>
+            <div class="viewport">
+              <span class="counter"><span data-cur>1</span> / <span data-total>4</span></span>
+              <div class="slide active"><div class="shot landing" data-cap="landing"></div></div>
+              <div class="slide"><div class="shot wizard" data-cap="intake wizard"></div></div>
+              <div class="slide"><div class="shot workspace" data-cap="workspace"></div></div>
+              <div class="slide"><div class="shot workbench" data-cap="workbench"></div></div>
+              <div class="controls">
+                <div class="dots" data-dots></div>
+                <div class="nav-btns">
+                  <button data-prev aria-label="previous">‹</button>
+                  <button data-next aria-label="next">›</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="proj-detail">
+            <div>
+              <div class="colhead">What got built</div>
+              <ul class="built">
+                <li>Landing page with ZIP-based utility lookup</li>
+                <li>Intake wizard (location, heating type, timeline, income, etc.)</li>
+                <li>Incentive discovery via Rewiring America API</li>
+                <li>Program rules registry with 4 curated state programs (MA, NY, CA, ME)</li>
+                <li>Crawler infrastructure with deterministic parsing</li>
+                <li>Registry validator (CLI + web UI) with LLM-powered source checking</li>
+                <li>Filing guide generator and workbench</li>
+                <li>Workspace with plan, documents, timeline, and messages pages</li>
+                <li>Risk engine, recommendation scoring, execution step sequencing</li>
+              </ul>
+            </div>
+            <div>
+              <div class="colhead">Takeaways</div>
+              <ol class="learnings">
+                <li>Good learning project since it had a large and complex data/crawling component.</li>
+                <li>Ultimately I built way too much product for the scope of the user problem.</li>
+                <li>The combo of deterministic rules with LLM-powered source checking and user-facing descriptions proved powerful; this is likely a model I'll use again.</li>
+              </ol>
+            </div>
+          </div>
+        </article>
+
+
+        <!-- prototype — with learnings, 2 screenshots -->
         <article class="proj-item" data-stage="prototype">
-          <div class="shot s3"></div>
-          <div class="proj-body">
-            <div class="proj-meta">
-              <span class="date">Apr 14, 2026</span>
-              <span class="pill prototype">prototype</span>
+          <div class="proj-meta">
+            <span class="date">Apr 14, 2026</span>
+            <span class="pill prototype">prototype</span>
+          </div>
+          <h3 class="proj-title">Project Title Two</h3>
+          <p class="proj-overview">
+            A working end-to-end prototype, built to see whether the core idea actually feels good
+            to use. Not yet shared widely — testing on a handful of friendly users.
+          </p>
+
+          <div class="carousel" data-carousel>
+            <div class="viewport">
+              <span class="counter"><span data-cur>1</span> / <span data-total>2</span></span>
+              <div class="slide active"><div class="shot s3" data-cap="main view"></div></div>
+              <div class="slide"><div class="shot s5" data-cap="detail"></div></div>
+              <div class="controls">
+                <div class="dots" data-dots></div>
+                <div class="nav-btns">
+                  <button data-prev aria-label="previous">‹</button>
+                  <button data-next aria-label="next">›</button>
+                </div>
+              </div>
             </div>
-            <h3 class="proj-title">Project Title Three</h3>
-            <p class="proj-desc">
-              Working end-to-end but not yet out in the world. Mostly built to see if
-              the core idea actually feels good to use.
-            </p>
+          </div>
+
+          <div class="proj-detail">
+            <div>
+              <div class="colhead">What got built</div>
+              <ul class="built">
+                <li>Core capture flow with single-prompt interaction</li>
+                <li>Local storage with import / export</li>
+                <li>Simple search and filter</li>
+                <li>Lightweight onboarding</li>
+              </ul>
+            </div>
+            <div>
+              <div class="colhead">Key learnings</div>
+              <ol class="learnings">
+                <li>The first 30 seconds are everything. If the empty state isn't intriguing, users bounce.</li>
+                <li>Pen-and-paper is the real competitor, not other apps. The bar is higher than it looks.</li>
+              </ol>
+            </div>
           </div>
         </article>
 
+        <!-- prototype — no learnings yet -->
         <article class="proj-item" data-stage="prototype">
-          <div class="shot s5"></div>
-          <div class="proj-body">
-            <div class="proj-meta">
-              <span class="date">Mar 30, 2026</span>
-              <span class="pill prototype">prototype</span>
+          <div class="proj-meta">
+            <span class="date">Mar 30, 2026</span>
+            <span class="pill prototype">prototype</span>
+          </div>
+          <h3 class="proj-title">Project Title Three</h3>
+          <p class="proj-overview">
+            A second prototype, exploring a different angle on the same problem. Building still
+            in flight — learnings haven't crystallized yet.
+          </p>
+
+          <div class="carousel" data-carousel>
+            <div class="viewport">
+              <span class="counter"><span data-cur>1</span> / <span data-total>2</span></span>
+              <div class="slide active"><div class="shot s1" data-cap="home"></div></div>
+              <div class="slide"><div class="shot s2" data-cap="settings"></div></div>
+              <div class="controls">
+                <div class="dots" data-dots></div>
+                <div class="nav-btns">
+                  <button data-prev aria-label="previous">‹</button>
+                  <button data-next aria-label="next">›</button>
+                </div>
+              </div>
             </div>
-            <h3 class="proj-title">Project Title Four</h3>
-            <p class="proj-desc">
-              A second prototype, exploring a different angle on the same problem.
-            </p>
           </div>
         </article>
 
+        <!-- investigate — 1 screenshot, no learnings -->
         <article class="proj-item" data-stage="investigate">
-          <div class="shot s4"></div>
-          <div class="proj-body">
-            <div class="proj-meta">
-              <span class="date">Mar 12, 2026</span>
-              <span class="pill investigate">investigate</span>
+          <div class="proj-meta">
+            <span class="date">Mar 12, 2026</span>
+            <span class="pill investigate">investigate</span>
+          </div>
+          <h3 class="proj-title">Project Title Four</h3>
+          <p class="proj-overview">
+            A pitch I'm thinking through. Probably won't ship &mdash; but useful to write down
+            and share early to see if anyone else perks up at the idea.
+          </p>
+
+          <div class="carousel solo" data-carousel>
+            <div class="viewport">
+              <span class="counter"><span data-cur>1</span> / <span data-total>1</span></span>
+              <div class="slide active"><div class="shot notebook" data-cap="capture screen"></div></div>
+              <div class="controls">
+                <div class="dots" data-dots></div>
+                <div class="nav-btns">
+                  <button data-prev aria-label="previous">‹</button>
+                  <button data-next aria-label="next">›</button>
+                </div>
+              </div>
             </div>
-            <h3 class="proj-title">Project Title Five</h3>
-            <p class="proj-desc">
-              A pitch I'm thinking through. Probably won't ship &mdash; but useful to
-              write down and share early to see if anyone else perks up at the idea.
-            </p>
           </div>
         </article>
 
+        <!-- investigate — sketch only -->
         <article class="proj-item" data-stage="investigate">
-          <div class="shot s6"></div>
-          <div class="proj-body">
-            <div class="proj-meta">
-              <span class="date">Feb 24, 2026</span>
-              <span class="pill investigate">investigate</span>
+          <div class="proj-meta">
+            <span class="date">Feb 24, 2026</span>
+            <span class="pill investigate">investigate</span>
+          </div>
+          <h3 class="proj-title">Project Title Five</h3>
+          <p class="proj-overview">
+            Earliest stage &mdash; a one-paragraph note about why this might be worth
+            pursuing, and what would have to be true.
+          </p>
+
+          <div class="carousel solo" data-carousel>
+            <div class="viewport">
+              <div class="slide active"><div class="shot sketch" data-cap="early sketch"></div></div>
             </div>
-            <h3 class="proj-title">Project Title Six</h3>
-            <p class="proj-desc">
-              Earliest stage &mdash; a one-paragraph note about why this might be worth
-              pursuing, and what would have to be true.
-            </p>
           </div>
         </article>
 
       </div>
 
       <div class="foot">
-        <span id="projCount">6 projects</span>
+        <span id="projCount">5 projects</span>
         <span>rss · subscribe</span>
       </div>
     </section>
@@ -569,6 +800,38 @@
       if (ok) shown++;
     });
     count.textContent = shown + (shown === 1 ? ' project' : ' projects');
+  });
+
+  // ---------- carousels ----------
+  document.querySelectorAll('[data-carousel]').forEach(c => {
+    const slides = [...c.querySelectorAll('.slide')];
+    if (slides.length <= 1){
+      c.classList.add('solo');
+      return;
+    }
+    const dotsHost = c.querySelector('[data-dots]');
+    const cur = c.querySelector('[data-cur]');
+    const total = c.querySelector('[data-total]');
+    let i = 0;
+
+    slides.forEach((_, idx) => {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.setAttribute('aria-label', 'go to slide ' + (idx + 1));
+      b.addEventListener('click', () => go(idx));
+      dotsHost.appendChild(b);
+    });
+    if (total) total.textContent = slides.length;
+
+    function go(n){
+      i = (n + slides.length) % slides.length;
+      slides.forEach((s, idx) => s.classList.toggle('active', idx === i));
+      [...dotsHost.children].forEach((d, idx) => d.setAttribute('aria-current', idx === i));
+      if (cur) cur.textContent = i + 1;
+    }
+    c.querySelector('[data-prev]').addEventListener('click', () => go(i - 1));
+    c.querySelector('[data-next]').addEventListener('click', () => go(i + 1));
+    go(0);
   });
 </script>
 
