@@ -548,7 +548,7 @@
           </div>
           <h3 class="proj-title">dtOS &mdash; A self-updating personal knowledge base</h3>
           <p class="proj-overview">
-            Inspired by a combo of <a href="https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f" target="_blank">Karpathy's LLM Wiki post</a> and the <a href="https://aidbagentos.ai/home" target="_blank">AI DB agent OS</a>, this is an MCP-based knowledge base that sits in the background for every claude or chatgpt discussion. Without prompting, it pulls out the key ideas to create a persistent, compounding artifact that constantly gets richer. This artifact can be read as context for each new project, etc. Obsidian is the IDE.
+            An MCP-based personal knowledge base, inspired by <a href="https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f" target="_blank">Karpathy's LLM Wiki post</a> and the <a href="https://aidbagentos.ai/home" target="_blank">AI DB agent OS</a>. It runs silently in the background of every Claude or ChatGPT session. It extracts key ideas automatically, building a growing artifact that feeds context into new projects. Obsidian is the interface.
           </p>
 
           <div class="carousel solo" data-carousel>
@@ -562,9 +562,9 @@
               <div class="colhead">What's built</div>
               <ul class="built">
                 <li><span><b>Remote MCP server on Cloudflare Workers</b> — a stateless JSON-RPC server that exposes the wiki to any MCP-capable client (Claude iOS app, claude.ai, etc.), authenticated via a bearer token.</span></li>
-                <li><span><b>GitHub App integration</b> — reads and writes wiki pages directly to a GitHub repo via the GitHub Apps API (JWT signing, cached installation tokens, one commit per tool call), with no local clone needed.</span></li>
-                <li><span><b>Full CRUD tool suite</b> — read tools (get_schema, get_index, get_page, list_pages, search_wiki, get_log, list_raw_sources, get_raw_source) and write tools (create_page, update_page, append_log) that maintain index.md and log.md as side effects.</span></li>
-                <li><span><b>Schema enforcement</b> — frontmatter validation and slug rules (defined in src/schema.ts, with test fixtures for all page types) returned as MCP instructions on initialize so every session picks up wiki conventions automatically.</span></li>
+                <li><span><b>GitHub App integration</b> — reads and writes wiki pages directly to a GitHub repo via the GitHub Apps API, with no local clone needed.</span></li>
+                <li><span><b>Full CRUD tool suite</b> — read and write tools covering page creation, retrieval, search, logging, and raw sources, with index.md and log.md maintained as side effects.</span></li>
+                <li><span><b>Schema enforcement</b> — frontmatter validation and slug rules returned as MCP instructions on initialize, so every session picks up wiki conventions automatically.</span></li>
               </ul>
             </div>
             <div>
@@ -586,7 +586,7 @@
           </div>
           <h3 class="proj-title">RebateGuard &mdash; the easiest way to claim heat pump rebates</h3>
           <p class="proj-overview">
-            Inspired by the complexity of claiming my own energy rebate, I built a tool to simplify the process of discovering and claiming heat pump rebates. RebateGuard is a web app that identifies which rebates apply to the user and guides them through the steps to claim it, handling the paperwork on their behalf. The goal was to make it as easy as possible for homeowners to take advantage of energy-saving incentives.
+            Claiming my own heat pump rebate was a mess, so I built a tool to simplify it. RebateGuard identifies which rebates apply to a homeowner and walks them through claiming, handling the paperwork along the way.
           </p>
 
           <div class="carousel" data-carousel>
@@ -642,7 +642,7 @@
           </div>
           <h3 class="proj-title">Opportunity assessment agent debate</h3>
           <p class="proj-overview">
-            Opportunity Agents uses Claude Code multi-agent teams to run structured debates evaluating software business opportunities for solo AI-assisted founders. The idea was to see how effectively a team of agents could work together to identify solo-founder business opportunities.
+            Opportunity Agents uses Claude Code multi-agent teams to run structured debates evaluating software business opportunities for solo founders.
           </p>
 
           <div class="carousel solo" data-carousel>
@@ -655,9 +655,9 @@
             <div>
               <div class="colhead">What was built</div>
               <ul class="built">
-                <li>A multi-agent debate system with four specialized roles (Research Specialist, MBA Strategist, User Research Specialist, CEO/Synthesizer)</li>
-                <li>A structured evaluation rubric scoring opportunities across five dimensions: market size, solo buildability, acquisition simplicity, defensibility, and willingness to pay</li>
-                <li>An output pipeline where each agent writes to their own file and the CEO synthesizes a final ranked assessment</li>
+                <li>A multi-agent debate system with four specialized roles: Research Specialist, MBA Strategist, User Research Specialist, CEO/Synthesizer</li>
+                <li>A structured rubric scoring opportunities across five dimensions: market size, solo buildability, acquisition simplicity, defensibility, and willingness to pay</li>
+                <li>An output pipeline: each agent writes to its own file; the CEO synthesizes a final ranked assessment</li>
               </ul>
             </div>
             <div>
@@ -680,7 +680,7 @@
           </div>
           <h3 class="proj-title">Mill Valley Permits app</h3>
           <p class="proj-overview">
-            Mill Valley Permits is a native iOS/SwiftUI app that guides homeowners through the permit application process for home improvement projects in Mill Valley, CA. It combines an AI-powered intake chat flow with a fee estimator and document generation to turn a bureaucratic process into a guided, conversational experience.
+            A native iOS app that guides Mill Valley homeowners through the permit process for home improvement projects: AI-powered intake chat, fee estimation, and document generation.
           </p>
 
           <div class="carousel solo" data-carousel>
@@ -693,9 +693,10 @@
             <div>
               <div class="colhead">What was built</div>
               <ul class="built">
-                <li>AI-driven intake chat — a dynamic conversational intake flow (DynamicIntakeChatView, IntakeChatView) that asks project-specific questions and collects the data needed to fill out permit forms.</li>
-                <li>Fee estimator engine — a FeeEngine + FeeSchedule that calculates permit costs based on project facts, with a price calculator surfaced to users before they commit.</li>
-                <li>Permit packet generation — produces a PermitPacket with pre-filled form fields and a PDF preview (PDFPreviewView, PermitPacketView), ready to submit to the city.</li>              </ul>
+                <li>AI-driven intake chat — asks project-specific questions and collects the data needed to fill out permit forms.</li>
+                <li>Fee estimator — calculates permit costs based on project facts and surfaces a price estimate before the user commits.</li>
+                <li>Permit packet generation — pre-filled form fields and a PDF preview, ready to submit to the city.</li>
+              </ul>
             </div>
             <div>
               <div class="colhead">Takeaways</div>
