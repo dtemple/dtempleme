@@ -541,6 +541,42 @@
 
       <div class="proj-list" id="projList">
 
+        <article class="proj-item" data-stage="prototype">
+          <div class="proj-meta">
+            <span class="date">May, 2026</span>
+            <span class="pill prototype">prototype</span>
+          </div>
+          <h3 class="proj-title"><a href="https://daybreak.run" target="_blank">Daybreak &mdash; a personal training coach in Telegram</a></h3>
+          <p class="proj-overview">
+            A training coach I originally built for myself and am slowly opening up. Daybreak uses an athlete's Strava data, injury history, and training goals to deliver personalized daily training advice grounded in real-world training plans and principles. Onboarding, daily check-ins, plan adjustments for flare-ups and tweaks, and calendar integration all happen entirely in Telegram; a minimalist Next.js app handles allowlist signup, Strava OAuth, and a read-only plan view.
+          </p>
+
+          <div class="carousel solo" data-carousel>
+            <div class="viewport">
+              <div class="slide active"><div class="shot"><img src="assets/screenshots/daybreak.png" alt="Daybreak training coach" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block;"></div></div>
+            </div>
+          </div>
+
+          <div class="proj-detail">
+            <div>
+              <div class="colhead">What's built</div>
+              <ul class="built">
+                <li><span><strong>Onboarding and identity.</strong> /signup allowlist gate with one-time link_tokens and a QR deeplink; full Telegram onboarding state machine (steps 0&ndash;5 plus plan handoff).</span></li>
+                <li><span><strong>Daily check-in loop.</strong> /checkin wellness battery (readiness, soreness, note) feeds a single-call Claude coaching response; wellness_log.md, checkin_log.md, and agent_runs persisted, with a Sentry fallback.</span></li>
+                <li><span><strong>Strava and infra.</strong> OAuth wired end-to-end via /connect_strava, encrypted token storage, and a health-check ping.</span></li>
+              </ul>
+            </div>
+            <div>
+              <div class="colhead">Takeaways so far</div>
+              <ol class="learnings">
+                <li>For just myself, I could manage all of this with .md context files. Introducing a full database added a lot of scope.</li>
+                <li>Telegram integration has been easy. Strava is a pain in the ass.</li>
+                <li>Spent a bunch of time fussing with env variables on Vercel.</li>
+              </ol>
+            </div>
+          </div>
+        </article>
+
         <article class="proj-item" data-stage="launched">
           <div class="proj-meta">
             <span class="date">May, 2026</span>
@@ -838,7 +874,7 @@
       </div>
 
       <div class="foot">
-        <span id="projCount">5 projects</span>
+        <span id="projCount">6 projects</span>
         <span>rss · subscribe</span>
       </div>
     </section>
