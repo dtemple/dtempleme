@@ -389,8 +389,8 @@
     <div class="tagline" style="margin: 6px 0px 22px">product builder + dad</div>
 
     <nav class="nav" id="primary-nav">
-      <a href="#about" data-route="about" class="cur">About</a>
-      <a href="#projects" data-route="projects">Projects</a>
+      <a href="/" data-route="about" class="cur">About</a>
+      <a href="/projects" data-route="projects">Projects</a>
       <a href="https://github.com/dtemple" tabindex="-1">Github</a>
       <a href="https://docs.google.com/document/d/1_KHnRj4mjGBAbWYQtQ60Akv7Sm_zeATYgDxjrpMiKtE/edit?tab=t.0" tabindex="-1">Quick-Guide to Product</a>
     </nav>
@@ -548,7 +548,7 @@
           </div>
           <h3 class="proj-title"><a href="https://daybreak.run" target="_blank">Daybreak &mdash; a personal training coach in Telegram</a></h3>
           <p class="proj-overview">
-            A training coach I originally built for myself and am slowly opening up. Daybreak uses an athlete's Strava data, injury history, and training goals to deliver personalized daily training advice grounded in real-world training plans and principles. Onboarding, daily check-ins, plan adjustments for flare-ups and tweaks, and calendar integration all happen entirely in Telegram; a minimalist Next.js app handles allowlist signup, Strava OAuth, and a read-only plan view.
+            A training coach I built for myself and am slowly opening up. Daybreak uses an athlete's Strava data, injury history, and training goals to deliver personalized daily training advice grounded in real-world training plans and principles. Onboarding, daily check-ins, plan adjustments for flare-ups and tweaks, and calendar integration all happen entirely in Telegram; a minimalist Next.js app handles allowlist signup, Strava OAuth, and a read-only plan view.
           </p>
 
           <div class="carousel solo" data-carousel>
@@ -745,10 +745,10 @@
 
 
                 <!-- prototype — with learnings, 2 screenshots -->
-        <article class="proj-item" data-stage="prototype">
+        <article class="proj-item" data-stage="archived">
           <div class="proj-meta">
             <span class="date">April, 2026</span>
-            <span class="pill prototype">prototype</span>
+            <span class="pill investigate">archived</span>
           </div>
           <h3 class="proj-title">Mill Valley Permits app</h3>
           <p class="proj-overview">
@@ -895,20 +895,33 @@
     });
     window.scrollTo({top:0, behavior:'instant'});
   }
-  function routeFromHash(){
-    const h = (location.hash || '#about').replace(/^#/,'');
-    setRoute(h);
+  function routeFromLocation(){
+    if (location.hash){
+      const h = location.hash.replace(/^#/,'');
+      setRoute(h);
+      return;
+    }
+    const p = location.pathname.replace(/^\/+|\/+$/g,'');
+    setRoute(p || 'about');
   }
-  window.addEventListener('hashchange', routeFromHash);
+  function navigateTo(route){
+    const path = route === 'about' ? '/' : '/' + route;
+    if (location.pathname !== path || location.hash){
+      history.pushState({route}, '', path);
+    }
+    setRoute(route);
+  }
+  window.addEventListener('popstate', routeFromLocation);
+  window.addEventListener('hashchange', routeFromLocation);
   document.addEventListener('click', e => {
     const a = e.target.closest('a[data-route], a[data-route-link]');
     if (!a) return;
-    const route = a.dataset.route || (a.getAttribute('href') || '').replace(/^#/,'');
-    if (!route) return;
+    const route = a.dataset.route || (a.getAttribute('href') || '').replace(/^[#/]/,'');
+    if (!route && a.getAttribute('href') !== '/') return;
     e.preventDefault();
-    location.hash = '#' + route;
+    navigateTo(route || 'about');
   });
-  routeFromHash();
+  routeFromLocation();
 
   // ---------- filter ----------
   const stage = document.getElementById('stage');
