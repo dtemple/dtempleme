@@ -356,13 +356,64 @@
     display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;
   }
 
+  /* mobile-only chrome (hidden on desktop) */
+  .topbar{display:none}
+  .sheet{display:none}
+
   /* responsive */
   @media (max-width: 760px){
-    .layout{grid-template-columns:1fr;gap:36px;padding:40px 24px 80px}
-    .side{position:static}
-    .nav{flex-direction:row;flex-wrap:wrap;gap:14px}
-    .nav a{padding-left:0;margin-left:0;border:0}
-    .nav a.cur{border:0;text-decoration:underline;text-underline-offset:4px;text-decoration-thickness:2px}
+    .layout{grid-template-columns:1fr;gap:36px;padding:12px 24px 80px}
+    .side{display:none}
+
+    .topbar{
+      display:flex;align-items:center;justify-content:space-between;
+      padding:20px 24px;margin:0 -24px 8px;
+    }
+    .topbar-brand{
+      font-family:var(--serif);font-weight:500;font-size:20px;letter-spacing:0.5px;
+      color:var(--ink);text-decoration:none;
+    }
+    .menu-btn{
+      width:40px;height:40px;border:0;background:transparent;cursor:pointer;
+      display:flex;flex-direction:column;justify-content:center;align-items:center;gap:5px;
+      padding:0;border-radius:3px;
+    }
+    .menu-btn span{
+      display:block;width:22px;height:1px;background:var(--ink);
+      transition:background .12s;
+    }
+    .menu-btn:hover span{background:var(--ink)}
+
+    .sheet{
+      display:block;position:fixed;inset:0;background:var(--paper);z-index:100;
+      opacity:0;pointer-events:none;transition:opacity .2s ease;
+      padding:72px 36px;overflow-y:auto;
+    }
+    body.sheet-open{overflow:hidden}
+    body.sheet-open .sheet{opacity:1;pointer-events:auto}
+    .sheet-close{
+      position:absolute;top:14px;right:18px;width:40px;height:40px;
+      border:0;background:transparent;cursor:pointer;
+      font-family:var(--serif);font-weight:300;font-size:32px;line-height:1;
+      color:var(--ink-2);padding:0;
+    }
+    .sheet-close:hover{color:var(--ink)}
+    .sheet-nav{display:flex;flex-direction:column;gap:18px;margin-bottom:36px}
+    .sheet-nav a{
+      font-family:var(--serif);font-weight:400;font-size:22px;line-height:1.2;
+      color:var(--ink);text-decoration:none;
+    }
+    .sheet-nav a.cur{font-weight:500;text-decoration:underline;text-decoration-color:var(--ink-4);text-underline-offset:5px;text-decoration-thickness:1px}
+    .sheet-label{
+      font-family:var(--mono);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;
+      color:var(--ink-3);margin:0 0 14px;
+    }
+    .sheet-contact{display:flex;flex-direction:column;gap:12px}
+    .sheet-contact a{
+      font-family:var(--serif);font-weight:400;font-size:18px;
+      color:var(--ink-2);text-decoration:none;
+    }
+
     .proj-item{padding:36px 0 8px}
     .proj-detail{grid-template-columns:1fr;gap:28px}
     .intro{grid-template-columns:72px 1fr;gap:16px}
@@ -382,6 +433,14 @@
 <body class="no-current">
 
 <div class="layout">
+
+  <!-- ============ MOBILE TOP BAR ============ -->
+  <header class="topbar" aria-label="Site header">
+    <a href="/" data-route="about" class="topbar-brand">David Temple</a>
+    <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="mobileSheet">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
 
   <!-- ============ SIDEBAR ============ -->
   <aside class="side">
@@ -544,11 +603,11 @@
         <article class="proj-item" data-stage="prototype">
           <div class="proj-meta">
             <span class="date">May, 2026</span>
-            <span class="pill prototype">prototype</span>
+            <span class="pill experiment">market experiment</span>
           </div>
-          <h3 class="proj-title"><a href="https://daybreak.run" target="_blank">Daybreak &mdash; a personal training coach in Telegram</a></h3>
+          <h3 class="proj-title"><a href="https://daybreak.run" target="_blank">Daybreak &mdash; a running companion</a></h3>
           <p class="proj-overview">
-            A training coach I built for myself and am slowly opening up. Daybreak uses an athlete's Strava data, injury history, and training goals to deliver personalized daily training advice grounded in real-world training plans and principles. Onboarding, daily check-ins, plan adjustments for flare-ups and tweaks, and calendar integration all happen entirely in Telegram; a minimalist Next.js app handles allowlist signup, Strava OAuth, and a read-only plan view.
+            A running companion tool I built for myself and am slowly opening up. Daybreak uses an athlete's Strava data, injury history, and training goals to deliver personalized daily training advice grounded in real-world training plans and principles. Onboarding, daily check-ins, plan adjustments for flare-ups and tweaks, and calendar integration all happen entirely in Telegram; a minimalist Next.js app handles allowlist signup, Strava OAuth, and a read-only plan view.
           </p>
 
           <div class="carousel solo" data-carousel>
@@ -569,9 +628,9 @@
             <div>
               <div class="colhead">Takeaways so far</div>
               <ol class="learnings">
-                <li>For just myself, I could manage all of this with .md context files. Introducing a full database added a lot of scope.</li>
-                <li>Telegram integration has been easy. Strava is a pain in the ass.</li>
-                <li>Spent a bunch of time fussing with env variables on Vercel.</li>
+                <li>Going from a personal context system to a full next.js harness took 3-4 days.</li>
+                <li>Onboarding + plan generation has been the most challenging part. I've rebuilt it several times, relinquishing more to the LLMs each time in the name of flexibility.</li>
+                <li>Repeating pattern: I build something too deterministically, and have to rebuild in a way that gives more freedom to the LLM.</li>
               </ol>
             </div>
           </div>
@@ -883,6 +942,23 @@
 
 </div>
 
+<!-- ============ MOBILE SHEET ============ -->
+<div class="sheet" id="mobileSheet" role="dialog" aria-modal="true" aria-hidden="true" aria-label="Menu">
+  <button class="sheet-close" aria-label="Close menu">&times;</button>
+  <nav class="sheet-nav" id="sheet-nav">
+    <a href="/" data-route="about">About</a>
+    <a href="/projects" data-route="projects">Projects</a>
+    <a href="https://github.com/dtemple">Github</a>
+    <a href="https://docs.google.com/document/d/1_KHnRj4mjGBAbWYQtQ60Akv7Sm_zeATYgDxjrpMiKtE/edit?tab=t.0">Quick-Guide to Product</a>
+  </nav>
+  <div class="sheet-label">Contact</div>
+  <div class="sheet-contact">
+    <a href="https://www.linkedin.com/in/dtemple/">LinkedIn</a>
+    <a href="http://x.com/dtemple">Twitter</a>
+    <a href="mailto:dtemple@gmail.com">Email</a>
+  </div>
+</div>
+
 <script>
   // ---------- routing ----------
   function setRoute(route){
@@ -890,7 +966,7 @@
     document.querySelectorAll('.page').forEach(p => {
       p.classList.toggle('active', p.dataset.route === route);
     });
-    document.querySelectorAll('#primary-nav a[data-route]').forEach(a => {
+    document.querySelectorAll('#primary-nav a[data-route], #sheet-nav a[data-route]').forEach(a => {
       a.classList.toggle('cur', a.dataset.route === route);
     });
     window.scrollTo({top:0, behavior:'instant'});
@@ -922,6 +998,27 @@
     navigateTo(route || 'about');
   });
   routeFromLocation();
+
+  // ---------- mobile sheet ----------
+  const menuBtn = document.getElementById('menuBtn');
+  const sheet = document.getElementById('mobileSheet');
+  const sheetClose = sheet.querySelector('.sheet-close');
+  function openSheet(){
+    document.body.classList.add('sheet-open');
+    menuBtn.setAttribute('aria-expanded', 'true');
+    sheet.setAttribute('aria-hidden', 'false');
+  }
+  function closeSheet(){
+    document.body.classList.remove('sheet-open');
+    menuBtn.setAttribute('aria-expanded', 'false');
+    sheet.setAttribute('aria-hidden', 'true');
+  }
+  menuBtn.addEventListener('click', openSheet);
+  sheetClose.addEventListener('click', closeSheet);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSheet(); });
+  sheet.addEventListener('click', e => {
+    if (e.target.closest('a')) closeSheet();
+  });
 
   // ---------- filter ----------
   const stage = document.getElementById('stage');
