@@ -103,14 +103,41 @@
   .csend{width:28px;height:28px;border-radius:50%;background:var(--blue);color:#fff;border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;flex:none}
   .csend.off{background:#cdd0d6;cursor:default}
   @media(max-width:520px){.wrap{padding:40px 16px 72px}h1{font-size:32px}.lede{font-size:18px}}
+
+  /* password gate */
+  .gate{position:fixed;inset:0;background:var(--paper);z-index:50;display:flex;align-items:center;justify-content:center;padding:24px}
+  .gate-card{width:min(360px,100%);text-align:center}
+  .gate .eyebrow{margin-bottom:18px}
+  .gate h2{font-family:var(--serif);font-weight:500;font-size:26px;letter-spacing:.3px;margin:0 0 8px;color:var(--ink)}
+  .gate p{font-family:var(--serif);font-weight:300;font-size:16px;line-height:1.5;color:var(--ink-2);margin:0 0 22px}
+  .gate-form{display:flex;flex-direction:column;gap:10px}
+  .gate input{font-family:var(--serif);font-size:17px;color:var(--ink);background:#fff;border:1px solid var(--rule);border-radius:10px;padding:11px 14px;outline:none;text-align:center}
+  .gate input:focus{border-color:var(--ink-3)}
+  .gate button{font-family:var(--mono);font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--paper);background:var(--ink);border:none;border-radius:10px;padding:12px 0;cursor:pointer}
+  .gate button:hover{background:#000}
+  .gate-err{font-family:var(--mono);font-size:11px;letter-spacing:.5px;color:var(--down);min-height:14px;margin:4px 0 0;visibility:hidden}
+  .gate-err.show{visibility:visible}
+  body.locked{overflow:hidden}
 </style>
 </head>
-<body>
+<body class="locked">
+<div class="gate" id="gate">
+  <div class="gate-card">
+    <p class="eyebrow">Prototype · private</p>
+    <h2>CellarNotes</h2>
+    <p>This concept is shared privately. Enter the password to continue.</p>
+    <form class="gate-form" id="gateForm" autocomplete="off">
+      <input type="password" id="gatePass" placeholder="Password" aria-label="Password" autofocus />
+      <button type="submit">Enter</button>
+      <p class="gate-err" id="gateErr">Incorrect password</p>
+    </form>
+  </div>
+</div>
 <div class="wrap">
   <p class="eyebrow">Prototype · v0 · sample data</p>
-  <h1>CellarNotes</h1>
-  <p class="lede">The right thing to say, already in the thread.</p>
-  <p class="intro">Reps live in text. Orders come in by message, and the best reps win by knowing — in the moment — the account's allocations, what they bought last year, what's on deal, and what's worth pitching next. CellarNotes pulls that context into the thread and drafts the upsell, so every rep responds like your best one.</p>
+  <h1>CellarNotes (working name)</h1>
+  <p class="lede">Example of account data in SMS.</p>
+  <p class="intro">Here's the simplest version of what the idea we discussed could look like. Do you think folks would pay for this? This is janky but hopefully gives an example of how it could work. It looks like Snowflake integration would be relatively easy, Netsuite a little harder but still possible.</p>
   <p class="hint">↓ tap a conversation, then draft the reply</p>
 
   <div class="stage">
@@ -131,10 +158,30 @@
     </div>
   </div>
 
-  <p class="foot">Sample data, not a live system — built as a concept for a wine-trade partner to react to. &nbsp;<a href="https://dtemple.me/">dtemple.me</a></p>
+  <p class="foot">Sample data, not a live system.&nbsp;<a href="https://dtemple.me/">dtemple.me</a></p>
 </div>
 
 <script>
+(function(){
+  var PASS = 'uno';
+  var gate = document.getElementById('gate');
+  function unlock(){
+    document.body.classList.remove('locked');
+    gate.style.display = 'none';
+    try{ sessionStorage.setItem('cn_unlocked','1'); }catch(e){}
+  }
+  if(sessionStorage.getItem && sessionStorage.getItem('cn_unlocked')==='1'){ unlock(); }
+  document.getElementById('gateForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    var val = document.getElementById('gatePass').value.trim().toLowerCase();
+    if(val === PASS){ unlock(); }
+    else {
+      document.getElementById('gateErr').classList.add('show');
+      var inp = document.getElementById('gatePass');
+      inp.value = ''; inp.focus();
+    }
+  });
+})();
 function ic(name, size, cls){
   size = size || 20;
   var P = {
