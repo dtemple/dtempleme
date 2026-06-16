@@ -87,6 +87,11 @@
   .clab{font-size:13px;color:var(--p2)}
   .cval{font-size:13px;font-weight:600;color:var(--p1);text-align:right}
   .cval.warn{color:var(--warn)} .cval.down{color:var(--down)} .cval.up{color:var(--up)}
+  .stock{margin-top:10px;border-top:.5px solid #efeff2;padding-top:10px}
+  .stocktitle{display:flex;align-items:center;gap:5px;font-size:12px;font-weight:600;color:var(--chiptx);margin:0 0 6px}
+  .srow{display:flex;justify-content:space-between;align-items:center;padding:3px 0}
+  .sname{font-size:13px;color:var(--p1)}
+  .sqty{font-size:12px;font-weight:600;color:var(--up);white-space:nowrap}
   .drawbtn{margin-top:10px;width:100%;display:flex;align-items:center;justify-content:center;gap:6px;background:#fff;border:1px solid var(--bluebd);color:#0c447c;border-radius:10px;padding:9px 0;font-size:13.5px;font-weight:600;cursor:pointer}
   .drawbtn:hover{background:#f6faff}
   .sugg{background:var(--bluebg);border:.5px solid var(--bluebd);border-radius:14px;padding:12px;margin-top:8px}
@@ -206,37 +211,42 @@ var convs = {
   marin:{name:"Marin Hospitality Group",initials:"MH",sub:"on-premise · San Francisco",time:"2:14 PM",unread:true,
     preview:"And something bubbly for the BTG list?",
     messages:[{f:'them',t:"Hey — can I get 6 cases of the Conterno Barolo '19?"},{f:'them',t:"And something bubbly you'd put on a by-the-glass list?"}],
-    context:[["Conterno '19 allocation","4 of 12 cases left","warn"],["Spend YTD vs last yr","$48k ↓ from $61k","down"],["Top categories","Champagne, Barolo",""],["Open deal","5% case rate · ends Fri",""],["Selosse Champagne","In stock · bought last spr","up"]],
+    context:[["Conterno '19 allocation","4 of 12 cases left","warn"],["Spend YTD vs last yr","$48k ↓ from $61k","down"],["Last sale","May 28 · $3.1k",""],["SKUs on file","37 active",""],["Top categories","Champagne, Barolo",""],["Open deal","5% case rate · ends Fri",""]],
+    stock:{title:"In-stock bubbly to offer",items:[["Selosse Initial, NV","6 cs"],["Pierre Péters Cuvée de Réserve","11 cs"],["Bérêche Brut Réserve","4 cs"],["Ployez-Jacquemart Extra Brut","9 cs"]]},
     suggestion:"Got you down for 4 cases of the Conterno '19 — that's the last of your allocation, so good timing. For bubbles, the Selosse just landed and you crushed it last spring. Want 2 cases at your 5% case rate before it expires Friday?"},
   cypress:{name:"Cypress & Vine",initials:"CV",sub:"retail shop · Healdsburg",time:"1:48 PM",unread:true,
     preview:"Also — any new Loire whites worth tasting?",
     messages:[{f:'them',t:"Can we move Friday's delivery to Monday?"},{f:'them',t:"Also — any new Loire whites worth tasting?"}],
-    context:[["Account standing","Net-30 · current","up"],["Spend YTD vs last yr","$22k ↑ from $17k","up"],["Huet Vouvray","Inbound Tue · 8 cases",""],["Last Loire order","None in 9 months","warn"]],
+    context:[["Account standing","Net-30 · current","up"],["Spend YTD vs last yr","$22k ↑ from $17k","up"],["Last sale","Jun 2 · $1.4k",""],["SKUs on file","22 active",""],["Huet Vouvray","Inbound Tue · 8 cases",""],["Last Loire order","None in 9 months","warn"]],
+    stock:{title:"In-stock Loire whites",items:[["Pépière Muscadet 'Clos des Briords'","12 cs"],["Thomas-Labaille Sancerre","6 cs"],["La Taille aux Loups Montlouis Sec","8 cs"],["Vacheron Sancerre","9 cs"]]},
     suggestion:"No problem — I'll push the delivery to Monday. On Loire: the new Huet Vouvray lands Tuesday and you haven't tasted the lineup in a while. Want me to set aside 2 cases plus a sample for the team?"},
   tasting:{name:"The Tasting Room",initials:"TR",sub:"on-premise · Oakland",time:"12:30 PM",unread:true,
     preview:"Need 3 more cases of the Sancerre",
     messages:[{f:'them',t:"Need 3 more cases of the Sancerre"}],
-    context:[["Sancerre (current)","In stock · 26 cases","up"],["Reorder pace","Every ~2 weeks",""],["Never tried","Pouilly-Fumé, same grower",""],["Open deal","Mixed-case 6% off",""]],
+    context:[["Sancerre (current)","In stock · 26 cases","up"],["Last sale","May 30 · $2.2k",""],["SKUs on file","18 active",""],["Reorder pace","Every ~2 weeks",""],["Never tried","Pouilly-Fumé, same grower",""],["Open deal","Mixed-case 6% off",""]],
+    stock:{title:"Sauvignon in stock to offer",items:[["Sancerre 'Les Monts Damnés' (usual)","26 cs"],["Pouilly-Fumé, same grower — NEW","14 cs"],["Quincy, Dom. des Ballandors","7 cs"],["Menetou-Salon, Henry Pellé","10 cs"]]},
     suggestion:"3 cases of the Sancerre on the way. Same grower just released a Pouilly-Fumé that drinks like the Sancerre's bigger sibling — want me to drop one case in at the 6% mixed-case rate so you can pour both?"},
   noe:{name:"Noe Valley Bistro",initials:"NV",sub:"on-premise · San Francisco",time:"11:05 AM",unread:false,
     preview:"What's our allocation on the Cornas this year?",
     messages:[{f:'them',t:"What's our allocation on the Cornas this year?"}],
-    context:[["Cornas allocation","2 of 6 cases left","warn"],["Spend YTD vs last yr","$31k ↑ from $28k","up"],["By-the-glass Rhônes","3 SKUs, strong sell-through",""],["Open deal","None active",""]],
+    context:[["Cornas allocation","2 of 6 cases left","warn"],["Spend YTD vs last yr","$31k ↑ from $28k","up"],["Last sale","Jun 1 · $2.8k",""],["SKUs on file","29 active",""],["By-the-glass Rhônes","3 SKUs, strong sell-through",""],["Open deal","None active",""]],
+    stock:{title:"Northern Rhône to offer",items:[["Cornas (last of allocation)","2 cs"],["Saint-Joseph, same grower — NEW","16 cs"],["Crozes-Hermitage, Dom. Combier","11 cs"],["Côte-Rôtie","3 cs"]]},
     suggestion:"You've got 2 of your 6 cases of Cornas left for the year. Given how your Rhône by-the-glass is moving, want me to lock both now before they're gone? I can also send the new Saint-Joseph as a lower-price pour."},
   embarcadero:{name:"Embarcadero Wine Bar",initials:"EW",sub:"on-premise · San Francisco",time:"Yesterday",unread:false,
     preview:"Reorder — same as last week please",
     messages:[{f:'them',t:"Reorder — same as last week please"}],
-    context:[["Last week's order","6 SKUs · $4.2k",""],["Out of stock now","1 of 6 (Muscadet)","warn"],["Spend YTD vs last yr","$58k ↑ from $44k","up"],["New arrival","Grower Champagne, fits list",""]],
+    context:[["Last week's order","6 SKUs · $4.2k",""],["Last sale","Jun 3 · $4.2k",""],["SKUs on file","41 active",""],["Out of stock now","1 of 6 (Muscadet)","warn"],["Spend YTD vs last yr","$58k ↑ from $44k","up"],["New arrival","Grower Champagne, fits list",""]],
     suggestion:"Reorder's in — heads up, the Muscadet from last week is out, so I subbed the same grower's Gros Plant (very close). Also just landed a grower Champagne that fits your list — want a case to try by the glass?"},
   larkspur:{name:"Larkspur Table",initials:"LT",sub:"on-premise · Larkspur",time:"Yesterday",unread:false,
     preview:"Is the Huet back in stock yet?",
     messages:[{f:'them',t:"Is the Huet back in stock yet?"}],
-    context:[["Huet Vouvray","Back in stock today","up"],["Account standing","Net-30 · 12 days out",""],["Spend YTD vs last yr","$19k ↓ from $24k","down"],["Open deal","5% case rate · ends Fri",""]],
+    context:[["Huet Vouvray","Back in stock today","up"],["Account standing","Net-30 · 12 days out",""],["Last sale","May 19 · $1.1k",""],["SKUs on file","15 active",""],["Spend YTD vs last yr","$19k ↓ from $24k","down"],["Open deal","5% case rate · ends Fri",""]],
+    stock:{title:"In-stock Loire whites",items:[["Huet Vouvray 'Le Haut-Lieu' Sec","10 cs"],["Pépière Muscadet (sample)","12 cs"],["La Taille aux Loups Montlouis","6 cs"]]},
     suggestion:"Good timing — the Huet just came back in today. Want me to put aside 2 cases at the 5% case rate before it closes Friday? You're running a little behind last year, so I can throw in the new Muscadet sample too."},
   sausalito:{name:"Sausalito Provisions",initials:"SP",sub:"retail shop · Sausalito",time:"Mon",unread:false,
     preview:"Send over the new Burgundy offers",
     messages:[{f:'them',t:"Send over the new Burgundy offers"}],
-    context:[["Burgundy offers","7 new · 2 allocated",""],["Past Burgundy spend","$12k last yr",""],["Allocated to you","Roulot, 1 case","up"],["Offer window","Closes Wed","warn"]],
+    context:[["Burgundy offers","7 new · 2 allocated",""],["Past Burgundy spend","$12k last yr",""],["Last sale","May 26 · $1.9k",""],["SKUs on file","24 active",""],["Allocated to you","Roulot, 1 case","up"],["Offer window","Closes Wed","warn"]],
     suggestion:"Sending the full Burgundy sheet now. Two are allocation-only this year and I've got you down for 1 case of the Roulot — want me to confirm that before the window closes Wednesday? Happy to walk the rest by phone."}
 };
 var order = ["marin","cypress","tasting","noe","embarcadero","larkspur","sausalito"];
@@ -265,7 +275,12 @@ function threadHTML(id){
   var ctx = c.context.map(function(r){
     return '<div class="crow"><span class="clab">'+esc(r[0])+'</span><span class="cval '+r[2]+'">'+esc(r[1])+'</span></div>';
   }).join('');
-  var contextCard = '<div class="card"><div class="chiprow"><span class="chip">'+ic('bolt',13)+'Account context</span><span class="auto">auto-pulled</span></div>'+ctx;
+  var stockHTML = '';
+  if(c.stock){
+    stockHTML = '<div class="stock"><p class="stocktitle">'+ic('spark',13)+esc(c.stock.title)+'</p>'+
+      c.stock.items.map(function(it){return '<div class="srow"><span class="sname">'+esc(it[0])+'</span><span class="sqty">'+esc(it[1])+'</span></div>';}).join('')+'</div>';
+  }
+  var contextCard = '<div class="card"><div class="chiprow"><span class="chip">'+ic('bolt',13)+'Account context</span><span class="auto">auto-pulled</span></div>'+ctx+stockHTML;
   if(!c.showSuggestion){
     contextCard += '<button class="drawbtn" onclick="reveal(\''+id+'\')">'+ic('spark',15)+'Draft the upsell reply</button>';
   }
