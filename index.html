@@ -295,6 +295,173 @@
   .carousel.solo .controls{display:none}
   .carousel.solo .counter{display:none}
 
+  /* CellarNotes data-to-action graphic */
+  .cellarnotes-graphic{
+    container-type:inline-size;margin:24px 0 0;padding:18px 20px;
+    border:1px solid var(--rule);border-radius:3px;background:#f6f4ef;
+    overflow:hidden;
+  }
+  #cellarnotes-data-to-action-graphic{
+    --grey:#5a544b;--rule1c:#d5cec0;--surface:#fffefb;--r-sm:10px;
+    --display:var(--serif);
+    --sans:-apple-system,BlinkMacSystemFont,'SF Pro Text','Helvetica Neue','Segoe UI',Helvetica,Arial,sans-serif;
+    width:100%;padding:8px 0;color:var(--ink);font-family:var(--sans);
+    font-variant-numeric:tabular-nums;
+  }
+  #cellarnotes-data-to-action-graphic *{box-sizing:border-box}
+  #cellarnotes-data-to-action-graphic .cn-stage{
+    display:grid;grid-template-columns:minmax(0,1fr) 60px minmax(230px,1.04fr);
+    gap:12px;align-items:center;width:100%;min-height:290px;
+  }
+  #cellarnotes-data-to-action-graphic .cn-source{
+    position:relative;height:270px;overflow:hidden;
+  }
+  #cellarnotes-data-to-action-graphic .cn-trace{
+    position:absolute;inset:0;width:100%;height:100%;opacity:.18;
+  }
+  #cellarnotes-data-to-action-graphic .cn-trace path{
+    fill:none;stroke:currentColor;stroke-linecap:round;stroke-width:1.2;
+    stroke-dasharray:3 6;animation:cn-graphic-dash 3s linear infinite;
+  }
+  #cellarnotes-data-to-action-graphic .cn-bit{
+    position:absolute;z-index:2;display:inline-flex;align-items:center;
+    min-height:25px;max-width:none;padding:5px 7px;border:1px solid var(--rule1c);
+    border-radius:var(--r-sm);background:var(--surface);color:var(--grey);
+    font-size:9px;line-height:1.25;white-space:nowrap;
+    animation:cn-graphic-bit 10s ease-in-out infinite;animation-delay:var(--cn-delay);
+  }
+  #cellarnotes-data-to-action-graphic .cn-bit:nth-of-type(1){left:7%;top:8%;--cn-delay:-.1s}
+  #cellarnotes-data-to-action-graphic .cn-bit:nth-of-type(2){left:51%;top:5%;--cn-delay:-.4s}
+  #cellarnotes-data-to-action-graphic .cn-bit:nth-of-type(3){left:20%;top:24%;--cn-delay:-.7s}
+  #cellarnotes-data-to-action-graphic .cn-bit:nth-of-type(4){left:59%;top:23%;--cn-delay:-1s}
+  #cellarnotes-data-to-action-graphic .cn-bit:nth-of-type(5){left:3%;top:42%;--cn-delay:-.3s}
+  #cellarnotes-data-to-action-graphic .cn-bit:nth-of-type(6){left:46%;top:43%;--cn-delay:-.6s}
+  #cellarnotes-data-to-action-graphic .cn-bit:nth-of-type(7){left:16%;top:57%;--cn-delay:-.9s}
+  #cellarnotes-data-to-action-graphic .cn-memory{
+    position:absolute;z-index:4;right:7%;bottom:14px;left:8%;padding:10px 12px 11px;
+    border:1px solid var(--rule1c);border-radius:var(--r-sm);background:var(--surface);
+    animation:cn-graphic-memory 10s ease-in-out infinite;
+  }
+  #cellarnotes-data-to-action-graphic .cn-memory::after{
+    position:absolute;bottom:-7px;left:24px;width:12px;height:12px;
+    border-right:1px solid var(--rule1c);border-bottom:1px solid var(--rule1c);
+    background:var(--surface);content:"";transform:rotate(45deg);
+  }
+  #cellarnotes-data-to-action-graphic .cn-memory q{
+    display:block;color:var(--ink);font-family:var(--display);font-size:12px;
+    line-height:1.25;quotes:none;
+  }
+  #cellarnotes-data-to-action-graphic .cn-engine{
+    position:relative;display:flex;min-height:270px;align-items:center;justify-content:center;
+  }
+  #cellarnotes-data-to-action-graphic .cn-line{
+    position:absolute;right:-12px;left:-12px;top:50%;height:1px;
+    overflow:hidden;background:var(--rule1c);
+  }
+  #cellarnotes-data-to-action-graphic .cn-line::after{
+    position:absolute;top:-1px;left:-36px;width:36px;height:3px;border-radius:4px;
+    background:var(--ink);content:"";animation:cn-graphic-travel 2.2s ease-in-out infinite;
+  }
+  #cellarnotes-data-to-action-graphic .cn-glyph{
+    position:relative;z-index:3;display:grid;width:58px;height:58px;place-items:center;
+    border:1px solid var(--ink);border-radius:50%;background:var(--surface);color:var(--ink);
+    animation:cn-graphic-breathe 10s ease-in-out infinite;
+  }
+  #cellarnotes-data-to-action-graphic .cn-glyph svg{width:32px;height:32px}
+  #cellarnotes-data-to-action-graphic .cn-output{
+    display:flex;min-height:270px;flex-direction:column;gap:6px;
+  }
+  #cellarnotes-data-to-action-graphic .cn-priority{
+    display:grid;grid-template-columns:26px minmax(0,1fr);gap:8px;align-items:start;
+    padding:11px 8px;border-bottom:1px solid var(--rule1c);opacity:0;
+    transform:translateY(12px);
+  }
+  #cellarnotes-data-to-action-graphic .cn-priority:nth-child(3){border-bottom:0}
+  #cellarnotes-data-to-action-graphic .cn-rank{
+    display:grid;width:22px;height:22px;place-items:center;border-radius:50%;
+    color:var(--grey);font-family:var(--display);font-size:14px;font-weight:500;
+  }
+  #cellarnotes-data-to-action-graphic .cn-account{
+    margin:0 0 3px;color:var(--ink);font-family:var(--display);font-size:15px;
+    font-weight:500;line-height:1.25;
+  }
+  #cellarnotes-data-to-action-graphic .cn-why{
+    margin:0 0 7px;color:var(--grey);font-size:9px;line-height:1.35;
+  }
+  #cellarnotes-data-to-action-graphic .cn-offer{
+    display:flex;gap:6px;align-items:baseline;color:var(--grey);font-size:10px;line-height:1.35;
+  }
+  #cellarnotes-data-to-action-graphic .cn-offer span{
+    color:var(--ink);font-size:9px;font-weight:500;
+  }
+  @keyframes cn-graphic-bit{
+    0%,18%{opacity:1;transform:translate(0,0) rotate(-1.5deg)}
+    24%{opacity:1;transform:translate(2px,-2px) rotate(1deg)}
+    42%,68%{opacity:.15;transform:translate(24px,0) scale(.75)}
+    82%,100%{opacity:1;transform:translate(0,0) rotate(-1.5deg)}
+  }
+  @keyframes cn-graphic-memory{
+    0%,24%{opacity:1;transform:translate(0,0) scale(1)}
+    42%,68%{opacity:.2;transform:translate(24px,-8px) scale(.82)}
+    82%,100%{opacity:1;transform:translate(0,0) scale(1)}
+  }
+  @keyframes cn-graphic-breathe{
+    0%,22%,72%,100%{box-shadow:0 0 0 0 rgba(35,32,27,0);transform:scale(1)}
+    36%,52%{box-shadow:0 0 0 12px rgba(35,32,27,.06);transform:scale(1.05)}
+  }
+  @keyframes cn-graphic-travel{
+    0%{left:-36px;opacity:0}20%,80%{opacity:1}100%{left:100%;opacity:0}
+  }
+  @keyframes cn-graphic-dash{to{stroke-dashoffset:-18}}
+  @keyframes cn-graphic-travel-down{
+    0%{top:-28px;opacity:0}20%,80%{opacity:1}100%{top:100%;opacity:0}
+  }
+  @keyframes cn-graphic-arrive{
+    from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}
+  }
+  .cellarnotes-graphic.in #cellarnotes-data-to-action-graphic .cn-priority{
+    animation:cn-graphic-arrive .8s cubic-bezier(.22,.61,.36,1) forwards;
+  }
+  .cellarnotes-graphic.in #cellarnotes-data-to-action-graphic .cn-priority:nth-child(1){animation-delay:.15s}
+  .cellarnotes-graphic.in #cellarnotes-data-to-action-graphic .cn-priority:nth-child(2){animation-delay:.55s}
+  .cellarnotes-graphic.in #cellarnotes-data-to-action-graphic .cn-priority:nth-child(3){animation-delay:.95s}
+  #cellarnotes-data-to-action-graphic .cn-bit,
+  #cellarnotes-data-to-action-graphic .cn-memory,
+  #cellarnotes-data-to-action-graphic .cn-trace path,
+  #cellarnotes-data-to-action-graphic .cn-line::after,
+  #cellarnotes-data-to-action-graphic .cn-glyph{animation-play-state:paused}
+  .cellarnotes-graphic.is-live #cellarnotes-data-to-action-graphic .cn-bit,
+  .cellarnotes-graphic.is-live #cellarnotes-data-to-action-graphic .cn-memory,
+  .cellarnotes-graphic.is-live #cellarnotes-data-to-action-graphic .cn-trace path,
+  .cellarnotes-graphic.is-live #cellarnotes-data-to-action-graphic .cn-line::after,
+  .cellarnotes-graphic.is-live #cellarnotes-data-to-action-graphic .cn-glyph{animation-play-state:running}
+  @container (max-width:520px){
+    #cellarnotes-data-to-action-graphic .cn-stage{
+      grid-template-columns:1fr;grid-template-rows:auto 64px auto;gap:10px;
+    }
+    #cellarnotes-data-to-action-graphic .cn-source{height:230px}
+    #cellarnotes-data-to-action-graphic .cn-engine{min-height:64px}
+    #cellarnotes-data-to-action-graphic .cn-line{
+      right:auto;bottom:-10px;left:50%;top:-10px;width:1px;height:auto;
+    }
+    #cellarnotes-data-to-action-graphic .cn-line::after{
+      top:-24px;left:-1px;width:3px;height:28px;animation-name:cn-graphic-travel-down;
+    }
+    #cellarnotes-data-to-action-graphic .cn-glyph{width:56px;height:56px}
+    #cellarnotes-data-to-action-graphic .cn-output{min-height:260px}
+    #cellarnotes-data-to-action-graphic .cn-bit{font-size:10px}
+    #cellarnotes-data-to-action-graphic .cn-account{font-size:17px}
+    #cellarnotes-data-to-action-graphic .cn-why{font-size:11px}
+    #cellarnotes-data-to-action-graphic .cn-offer{font-size:12px}
+    #cellarnotes-data-to-action-graphic .cn-offer span{font-size:10px}
+  }
+  @media (prefers-reduced-motion:reduce){
+    #cellarnotes-data-to-action-graphic *,
+    #cellarnotes-data-to-action-graphic *::before,
+    #cellarnotes-data-to-action-graphic *::after{animation:none!important}
+    #cellarnotes-data-to-action-graphic .cn-priority{opacity:1;transform:none}
+  }
+
   /* two-col detail (built + learnings) */
   .proj-detail{
     display:grid;grid-template-columns:1.1fr 1fr;gap:36px;
@@ -610,9 +777,71 @@
             A sales tool for the wine trade that turns scattered sales data and a rep's remembered account context into a prioritized daily plan: which accounts to call and which wines to offer. Reps can teach it what only they know, improving its recommendations over time, and access the result on the web, in ChatGPT, or wherever they work.
           </p>
 
-          <div class="carousel solo" data-carousel>
-            <div class="viewport">
-              <div class="slide active"><div class="shot"><img src="assets/screenshots/cellarnotes-landing.png" alt="CellarNotes landing page" style="width:100%;height:100%;object-fit:cover;object-position:top;display:block;"></div></div>
+          <div class="cellarnotes-graphic">
+            <div id="cellarnotes-data-to-action-graphic">
+              <div class="cn-stage" role="img" aria-label="Scattered sales data and a seller's remembered account context flow through CellarNotes and become a prioritized list of accounts to call and wines to offer.">
+                <div class="cn-source">
+                  <svg class="cn-trace" viewBox="0 0 320 290" aria-hidden="true" preserveAspectRatio="none">
+                    <path d="M20 38 C90 4 158 88 296 36"></path>
+                    <path d="M10 152 C82 112 182 210 307 126"></path>
+                    <path d="M28 248 C120 192 184 282 302 224"></path>
+                  </svg>
+                  <span class="cn-bit">Ferrier &amp; Sons</span>
+                  <span class="cn-bit">24 bottles available</span>
+                  <span class="cn-bit">Last order &middot; 43 days</span>
+                  <span class="cn-bit">Bought last 3 vintages</span>
+                  <span class="cn-bit">6 cases inbound</span>
+                  <span class="cn-bit">The Long Table</span>
+                  <span class="cn-bit">YTD sales &minus;18%</span>
+                  <div class="cn-memory">
+                    <q>&ldquo;They&rsquo;re building a fall list. Keep it above $40.&rdquo;</q>
+                  </div>
+                </div>
+
+                <div class="cn-engine" aria-hidden="true">
+                  <span class="cn-line"></span>
+                  <span class="cn-glyph">
+                    <svg viewBox="0 0 48 48">
+                      <defs>
+                        <mask id="cn-graphic-logo-mask">
+                          <rect width="48" height="48" fill="#fff"></rect>
+                          <g transform="rotate(-11 24 24)">
+                            <path d="M25 9C33 10.7 33 14.6 25 16.4C15.4 18.6 15.4 24 25 26.6C34.6 29.2 35.4 36.4 25.8 40.4" fill="none" stroke="#000" stroke-width="4.6" stroke-linecap="round"></path>
+                          </g>
+                        </mask>
+                      </defs>
+                      <circle cx="24" cy="24" r="22" fill="currentColor" mask="url(#cn-graphic-logo-mask)"></circle>
+                    </svg>
+                  </span>
+                </div>
+
+                <div class="cn-output">
+                  <article class="cn-priority">
+                    <span class="cn-rank">1</span>
+                    <div>
+                      <p class="cn-account">The Long Table</p>
+                      <p class="cn-why">Due to reorder &middot; familiar wine available now</p>
+                      <div class="cn-offer"><span>Offer</span> 2025 Coastal Ridge Pinot</div>
+                    </div>
+                  </article>
+                  <article class="cn-priority">
+                    <span class="cn-rank">2</span>
+                    <div>
+                      <p class="cn-account">Half Moon Cellars</p>
+                      <p class="cn-why">Buyer planning a fall list &middot; prefers $40+</p>
+                      <div class="cn-offer"><span>Offer</span> Ridgeline Syrah</div>
+                    </div>
+                  </article>
+                  <article class="cn-priority">
+                    <span class="cn-rank">3</span>
+                    <div>
+                      <p class="cn-account">Oyster Club</p>
+                      <p class="cn-why">Sales slowing &middot; new vintage landing soon</p>
+                      <div class="cn-offer"><span>Offer</span> 2025 Estate Albari&ntilde;o</div>
+                    </div>
+                  </article>
+                </div>
+              </div>
             </div>
           </div>
         </article>
@@ -1083,6 +1312,22 @@
     c.querySelector('[data-next]').addEventListener('click', () => go(i + 1));
     go(0);
   });
+
+  // ---------- CellarNotes graphic ----------
+  const cellarnotesGraphic = document.querySelector('.cellarnotes-graphic');
+  if (cellarnotesGraphic){
+    if (!('IntersectionObserver' in window)){
+      cellarnotesGraphic.classList.add('in', 'is-live');
+    } else {
+      const cellarnotesMotion = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          cellarnotesGraphic.classList.toggle('is-live', entry.isIntersecting);
+          if (entry.isIntersecting) cellarnotesGraphic.classList.add('in');
+        });
+      }, {threshold:0.1});
+      cellarnotesMotion.observe(cellarnotesGraphic);
+    }
+  }
 </script>
 
 </body>
