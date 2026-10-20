@@ -1,7 +1,4 @@
-# Publish only the front-end assets.
-*
-!index.html
-!styles.css
-!script.js
-!favicon.svg
-!vercel.json
+# The Vercel project root is haypress/. Exclude development documentation.
+README.md
+**/README.md
+.DS_Store

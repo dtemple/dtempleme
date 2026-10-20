@@ -30,10 +30,6 @@ The separate Vercel project is named `haypress`, with:
 
 Push commits to `main` for automatic production deployments; other branches receive Vercel previews. The existing workspace projects retain their own configuration.
 
-For a manual deployment, explicitly select the project from the repository root:
+Production: https://haypress.vercel.app
 
-```sh
-VERCEL_PROJECT_ID=prj_12A42WJc5PKrMaHbAgUru36VSumQ VERCEL_ORG_ID=team_WGUfcx1lrKtFkPg6rrZGVU3E vercel --prod
-```
-
-Do not run an unqualified deployment from the repository root, which already has a different Vercel project mapping. `.vercelignore` limits uploaded Haypress files to the page assets and Vercel configuration.
+Vercel builds only `haypress/`; `.vercelignore` excludes development documentation. No local Vercel link is required for Git deployments.
