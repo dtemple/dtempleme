@@ -22986,10 +22986,12 @@ ${document.documentElement.outerHTML}`;
     race = races.find((r) => r.key === key);
     state.race = key;
     const ghosts = state.champions ? champions(race.ghosts) : race.ghosts;
+    const byDate = [...ghosts].sort((a, b) => a.date - b.date);
+    const laneOf = new Map(byDate.map((g, i) => [g, byDate.length > 1 ? i / (byDate.length - 1) : 0.5]));
     field = ghosts.map((g) => ({
       run: g,
       finish: g.finish,
-      lane: (hash(g.id) - 0.5) * (ROAD_W - 3),
+      lane: (laneOf.get(g) - 0.5) * (ROAD_W - 3),
       d: 0,
       pos: new Vector3(),
       wall: new Vector3(),
