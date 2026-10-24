@@ -142,8 +142,23 @@
   .errors ul { margin: 14px 0 18px; padding-left: 18px; font-size: 13px; line-height: 1.5; max-height: 40vh; overflow: auto; }
   .fail { position: fixed; z-index: 9; left: 50%; top: 50%; transform: translate(-50%,-50%); max-width: 46ch; margin: 0; color: var(--dim); font-size: 14px; text-align: center; }
 
+  /* Hide-controls toggle: a corner button, the H key, or a long press on the scene. */
+  body.ui-hidden .ui { opacity: 0 !important; transition: opacity .4s ease; }
+  body.ui-hidden .ui * { pointer-events: none !important; }
+  .controls { right: 84px; }
+  .ui-toggle { position: fixed; z-index: 5; right: 30px; bottom: 22px; display: grid; place-items: center; padding: 0; color: var(--cyan); opacity: 0; pointer-events: none; transition: opacity 1.2s ease .3s; }
+  body.ready .ui-toggle { opacity: 1; pointer-events: auto; }
+  body.ui-hidden .ui-toggle { opacity: .35; box-shadow: none; transition: opacity .4s ease; }
+  body.ui-hidden .ui-toggle:hover, body.ui-hidden .ui-toggle:focus-visible { opacity: 1; }
+  .ui-toggle svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; }
+  .ui-toggle .shut { display: none; }
+  body.ui-hidden .ui-toggle .open { display: none; }
+  body.ui-hidden .ui-toggle .shut { display: block; }
+  #gl { -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; }
+
   @media (max-width: 760px) {
-    .brand { left: 16px; top: 16px; right: 16px; }
+    .ui-toggle { right: 16px; top: 12px; bottom: auto; }
+    .brand { left: 16px; top: 16px; right: 66px; }
     .top-right { right: 16px; left: 16px; top: auto; bottom: 200px; justify-items: start; }
     .board { display: none; }
     .card { left: 16px; right: 16px; width: auto; top: auto; bottom: 200px; }
@@ -259,6 +274,11 @@
     </div>
   </nav>
 </div>
+
+<button class="round ui-toggle" id="uiToggle" aria-pressed="false" aria-label="Hide controls" title="Hide controls (H, or long-press the scene)">
+  <svg class="open" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
+  <svg class="shut" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z"/><circle cx="12" cy="12" r="3"/><path d="M4 4l16 16"/></svg>
+</button>
 
 <div class="overlay intro" id="intro">
   <div class="panel">
@@ -23500,6 +23520,57 @@ ${lines}
   requestAnimationFrame(frame);
 })();
 
+</script>
+<script>
+// Hide or show the controls: the corner button, the H key, or a long press on the scene.
+(function () {
+  var btn = document.getElementById('uiToggle')
+  var gl = document.getElementById('gl')
+  function setHidden(hidden) {
+    document.body.classList.toggle('ui-hidden', hidden)
+    btn.setAttribute('aria-pressed', String(hidden))
+    var label = hidden ? 'Show controls' : 'Hide controls'
+    btn.setAttribute('aria-label', label)
+    btn.title = label + ' (H, or long-press the scene)'
+  }
+  function toggle() { setHidden(!document.body.classList.contains('ui-hidden')) }
+  btn.addEventListener('click', toggle)
+
+  addEventListener('keydown', function (e) {
+    if (e.key !== 'h' && e.key !== 'H') return
+    if (e.metaKey || e.ctrlKey || e.altKey) return
+    var t = e.target
+    if (t && (t.tagName === 'INPUT' || t.tagName === 'SELECT' || t.tagName === 'TEXTAREA' || t.isContentEditable)) return
+    var intro = document.getElementById('intro')
+    if (intro && !intro.classList.contains('gone')) return // the start card is up
+    toggle()
+  })
+
+  // A press that stays put for 600 ms toggles; any drag cancels it so orbiting still works.
+  var timer = null, x0 = 0, y0 = 0, t0 = 0, fired = false
+  function cancel() { clearTimeout(timer); timer = null }
+  function fire() {
+    cancel(); fired = true
+    toggle()
+    if (navigator.vibrate) navigator.vibrate(10)
+  }
+  gl.addEventListener('pointerdown', function (e) {
+    if (!e.isPrimary) { cancel(); return }
+    x0 = e.clientX; y0 = e.clientY; t0 = performance.now(); fired = false
+    cancel()
+    timer = setTimeout(fire, 600)
+  })
+  gl.addEventListener('pointermove', function (e) {
+    if (timer && Math.hypot(e.clientX - x0, e.clientY - y0) > 10) cancel()
+  })
+  gl.addEventListener('pointerup', function (e) {
+    if (timer && performance.now() - t0 >= 600) fire() // the timer ran late on a busy frame
+    cancel()
+    if (fired) e.stopImmediatePropagation() // a long press isn't a tap: don't follow a ghost
+  }, true)
+  gl.addEventListener('pointercancel', cancel)
+  gl.addEventListener('contextmenu', function (e) { if (fired || timer) e.preventDefault() })
+})()
 </script>
 </body>
 </html>
