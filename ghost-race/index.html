@@ -148,7 +148,7 @@
   .controls { right: 84px; }
   .ui-toggle { position: fixed; z-index: 5; right: 30px; bottom: 22px; display: grid; place-items: center; padding: 0; color: var(--cyan); opacity: 0; pointer-events: none; transition: opacity 1.2s ease .3s; }
   body.ready .ui-toggle { opacity: 1; pointer-events: auto; }
-  body.ui-hidden .ui-toggle { opacity: .35; box-shadow: none; transition: opacity .4s ease; }
+  body.ready.ui-hidden .ui-toggle { opacity: .8; }
   body.ui-hidden .ui-toggle:hover, body.ui-hidden .ui-toggle:focus-visible { opacity: 1; }
   .ui-toggle svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; }
   .ui-toggle .shut { display: none; }
@@ -191,7 +191,7 @@
 
 </script>
 </head>
-<body>
+<body class="ui-hidden">
 <canvas id="gl" aria-label="Every run racing each other as glowing ghosts on a road"></canvas>
 <div class="scan"></div>
 
@@ -275,9 +275,9 @@
   </nav>
 </div>
 
-<button class="round ui-toggle" id="uiToggle" aria-pressed="false" aria-label="Hide controls" title="Hide controls (H, or long-press the scene)">
-  <svg class="open" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
-  <svg class="shut" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z"/><circle cx="12" cy="12" r="3"/><path d="M4 4l16 16"/></svg>
+<button class="round ui-toggle" id="uiToggle" aria-expanded="false" aria-label="Show controls" title="Show controls (H, or long-press the scene)">
+  <svg class="open" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+  <svg class="shut" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/><circle cx="9" cy="7" r="2" fill="currentColor"/><circle cx="15" cy="12" r="2" fill="currentColor"/><circle cx="8" cy="17" r="2" fill="currentColor"/></svg>
 </button>
 
 <div class="overlay intro" id="intro">
@@ -23522,13 +23522,13 @@ ${lines}
 
 </script>
 <script>
-// Hide or show the controls: the corner button, the H key, or a long press on the scene.
+// Show or hide the controls (hidden at first): the corner button, the H key, or a long press on the scene.
 (function () {
   var btn = document.getElementById('uiToggle')
   var gl = document.getElementById('gl')
   function setHidden(hidden) {
     document.body.classList.toggle('ui-hidden', hidden)
-    btn.setAttribute('aria-pressed', String(hidden))
+    btn.setAttribute('aria-expanded', String(!hidden))
     var label = hidden ? 'Show controls' : 'Hide controls'
     btn.setAttribute('aria-label', label)
     btn.title = label + ' (H, or long-press the scene)'
